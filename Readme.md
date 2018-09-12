@@ -1,7 +1,7 @@
 # Личный проект «Дела в Порядке»
 
 * Студент: [Sergey Odintsov](https://up.htmlacademy.ru/php/6/user/799215).
-* Наставник: `Неизвестно`.
+* Наставник: [Артем Рыскин](https://up.htmlacademy.ru/php/6/user/106718).
 
 ---
 
