@@ -43,11 +43,10 @@ $tasks = [
 
 function nav_item_count($task_type, $category_name) {
     $count = 0;
-    foreach ($task_type as $key => $value) {
-        if ($value['type'] == $category_name) : {
+    foreach ($task_type as $value) {
+        if ($value['type'] == $category_name) {
             $count++;
         }
-        endif;
     };
     return $count;
 };
