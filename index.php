@@ -40,6 +40,16 @@ $tasks = [
         'fulfilled' => 'Нет'
     ]
 ];
+
+function nav_item_count($task_type, $category_name) {
+    $count = 0;
+    foreach ($task_type as $value) {
+        if ($value['type'] == $category_name) {
+            $count++;
+        }
+    };
+    return $count;
+};
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -85,10 +95,10 @@ $tasks = [
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach($categories as $value):?>
+                        <?php foreach ($categories as $name):?>
                             <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?=$value?></a>
-                                <span class="main-navigation__list-item-count">24</span>
+                                <a class="main-navigation__list-item-link" href="#"><?=$name?></a>
+                                <span class="main-navigation__list-item-count"><?=nav_item_count($tasks, $name)?></span>
                             </li>
                         <?php endforeach;?>
                     </ul>
