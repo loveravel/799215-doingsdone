@@ -30,7 +30,7 @@
             continue;
         }
         ?>
-        <tr class="tasks__item task <?=($value['fulfilled'] == 'Да') ? 'task--completed' : '';?><?=(floor(((strtotime($value['date']) - time()) / $secs_in_hour) < 24) && ($value['date'] !== 'Нет')) ? 'task--important' : '';?>">
+        <tr class="tasks__item task <?=($value['fulfilled'] == 'Да') ? 'task--completed' : '';?><?=(((strtotime($value['date']) - time()) / $secs_in_hour <= 24) && ($value['date'] !== 'Нет')) ? 'task--important' : '';?>">
             <td class="task__select">
                 <label class="checkbox task__checkbox">
                     <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=($value['fulfilled'] == 'Да') ? 'checked="checked"' : '' ; ?>>
