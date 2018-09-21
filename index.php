@@ -1,6 +1,6 @@
 <?php
-require_once ('functions.php');
-require_once ('data.php');
+require_once 'functions.php';
+require_once 'data.php';
 
 $page_content = include_template('index.php', [
     'tasks' => $tasks,
@@ -13,4 +13,4 @@ $layout_content = include_template('layout.php', [
     'title' => 'Дела в порядке'
 ]);
 
-print ($layout_content);
+echo $layout_content;
