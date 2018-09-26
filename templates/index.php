@@ -16,9 +16,7 @@
 
     <label class="checkbox">
         <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-        <input class="checkbox__input visually-hidden show_completed"
-               <?php if ($show_complete_tasks): ?>checked<?php endif; ?>
-               type="checkbox">
+        <input class="checkbox__input visually-hidden show_completed" <?=($show_complete_tasks) ? 'checked' : '' ?> type="checkbox">
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
@@ -30,7 +28,10 @@
             continue;
         }
         ?>
-        <tr class="tasks__item task <?=($value['fulfilled'] == 'Да') ? 'task--completed' : '';?><?=(((strtotime($value['date']) - time()) / $secs_in_hour <= 24) && ($value['date'] !== 'Нет')) ? 'task--important' : '';?>">
+        <tr class="tasks__item task
+            <?=($value['fulfilled'] == 'Да') ? 'task--completed' : '';?>
+            <?=(((strtotime($value['date']) - time()) / $secs_in_hour <= 24) && ($value['date'] !== 'Нет') && ($value['fulfilled'] !== 'Да')) ? 'task--important' : '';?>"
+        >
             <td class="task__select">
                 <label class="checkbox task__checkbox">
                     <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=($value['fulfilled'] == 'Да') ? 'checked="checked"' : '' ; ?>>
