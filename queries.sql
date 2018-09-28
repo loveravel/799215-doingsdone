@@ -59,7 +59,7 @@ UPDATE `tasks` SET `status`  = 1 WHERE id = 1;
 -- получить все задачи для завтрашнего дня;
 --
 
-SELECT `name`, `deadline` FROM `tasks` WHERE `deadline` BETWEEN NOW() AND `deadline`;
+SELECT `name`, `deadline` FROM `tasks` WHERE `deadline` >= date_add(CURRENT_DATE, INTERVAL 1 day) AND `deadline` < date_add(CURRENT_DATE, INTERVAL 2 day);
 
 -- --------------------------------------------------------
 --
