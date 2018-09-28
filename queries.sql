@@ -38,14 +38,14 @@ INSERT INTO `users` (`id`, `date_add`, `email`, `name`, `password`, `contacts`) 
 -- получить список из всех проектов для одного пользователя;
 --
 
-SELECT `users`.`name`, `projects`.`name` FROM `users` JOIN `projects` ON `users`.`id` = `projects`.`user_id` WHERE `users`.`id` = 1;
+SELECT `users`.`name`, `projects`.`name` FROM `users` INNER JOIN `projects` ON `users`.`id` = `projects`.`user_id` WHERE `users`.`id` = 1;
 
 -- --------------------------------------------------------
 --
 -- получить список из всех задач для одного проекта;
 --
 
-SELECT `projects`.`name`, `tasks`.`name` FROM `projects` JOIN `tasks` ON `projects`.`id` = `tasks`.`project_id` WHERE `projects`.`id` = 1;
+SELECT `projects`.`name`, `tasks`.`name` FROM `projects` INNER JOIN `tasks` ON `projects`.`id` = `tasks`.`project_id` WHERE `projects`.`id` = 1;
 
 -- --------------------------------------------------------
 --
