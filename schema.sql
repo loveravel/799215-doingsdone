@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 25 2018 г., 02:51
+-- Время создания: Сен 26 2018 г., 18:58
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.1.12
 
@@ -30,20 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL,
-  `name` char(255) NOT NULL,
+  `name` char(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `projects`
---
-
-INSERT INTO `projects` (`id`, `name`, `user_id`) VALUES
-(1, 'Входящие', 1),
-(2, 'Учеба', 1),
-(3, 'Работа', 1),
-(4, 'Домашние дела', 1),
-(5, 'Авто', 1);
 
 -- --------------------------------------------------------
 
@@ -78,13 +67,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `users`
---
-
-INSERT INTO `users` (`id`, `date_add`, `email`, `name`, `password`, `contacts`) VALUES
-(1, NULL, 'ignat.v@gmail.com', 'Игнат', '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', NULL);
-
---
 -- Индексы сохранённых таблиц
 --
 
@@ -92,25 +74,21 @@ INSERT INTO `users` (`id`, `date_add`, `email`, `name`, `password`, `contacts`) 
 -- Индексы таблицы `projects`
 --
 ALTER TABLE `projects`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `tasks`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD KEY `project_id` (`project_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD UNIQUE KEY `file_path` (`file_path`);
 
 --
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -120,7 +98,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `tasks`
@@ -132,24 +110,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `projects`
---
-ALTER TABLE `projects`
-  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Ограничения внешнего ключа таблицы `tasks`
---
-ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`),
-  ADD CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
