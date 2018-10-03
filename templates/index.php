@@ -24,17 +24,17 @@
 <table class="tasks">
     <?php foreach ($tasks as $key => $value): ?>
         <?php
-        if(!$show_complete_tasks && $value['fulfilled'] == 'Да') {
+        if(!$show_complete_tasks && $value['status']) {
             continue;
         }
         ?>
         <tr class="tasks__item task
-            <?=($value['fulfilled'] == 'Да') ? 'task--completed' : '';?>
-            <?=(((strtotime($value['date']) - time()) / $secs_in_hour <= 24) && ($value['date'] !== 'Нет') && ($value['fulfilled'] !== 'Да')) ? 'task--important' : '';?>"
+            <?=($value['status']) ? 'task--completed' : '';?>
+            <?=(((strtotime($value['deadline']) - time()) / $secs_in_hour <= 24) && ($value['deadline']) && (!$value['status'])) ? 'task--important' : '';?>"
         >
             <td class="task__select">
                 <label class="checkbox task__checkbox">
-                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=($value['fulfilled'] == 'Да') ? 'checked="checked"' : '' ; ?>>
+                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?=($value['status']) ? 'checked="checked"' : '' ; ?>>
                     <span class="checkbox__text"><?=$value['name']?></span>
                 </label>
             </td>
@@ -43,7 +43,7 @@
                 <a class="download-link" href="#">Home.psd</a>
             </td>
 
-            <td class="task__date"><?=$value['date']?></td>
+            <td class="task__date"><?=$value['deadline'];?></td>
         </tr>
     <?php endforeach;?>
 </table>

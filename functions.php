@@ -16,10 +16,10 @@ function include_template($name, $data) {
     return $result;
 };
 
-function nav_item_count($task_type, $category_name) {
+function nav_item_count($task_type, $project_id) {
     $count = 0;
     foreach ($task_type as $value) {
-        if ($value['type'] == $category_name) {
+        if ($value['project_id'] == $project_id) {
             $count++;
         }
     };
