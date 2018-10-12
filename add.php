@@ -56,7 +56,7 @@ if (!$link) {
 		// Валидация формы
 		$error_list = do_validate_form($info_list, $required_list, $projects);
 		$error_list += do_validate_date($info_list);
-		print_r($error_list);
+
 
 		// Добавление задачи в БД
 		if(empty($error_list)) {
@@ -68,8 +68,8 @@ if (!$link) {
 				$file_url = '/uploads/' . $file_name;
 
 				move_uploaded_file($_FILES['preview']['tmp_name'], $file_path . $file_name);
-				$info_list['file_path'] = $file_path;
-				$sql .= ', `file_name` = ' . $file_name . ', `file_path` = ' . $file_url;
+				$info_list['file_path'] = $file_url;
+				$sql .= ', `file_name` = "' . $file_name . '", `file_path` = "' . $file_url . '"';
 			} 
 
 			if (!empty($deadline_form)) {
@@ -101,4 +101,6 @@ if (!$link) {
 	]);
 }
 
+print_r($info_list);
+print_r($error_list);
 echo $layout_content;

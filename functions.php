@@ -70,7 +70,8 @@ function do_validate_date($info_list) {
     $error_list = [];
 
     if (!empty($info_list['deadline'])) {
-        DateTime::createFromFormat('d/m/Y', $info_list['deadline']);
+        $format = 'Y-m-d';
+        DateTime::createFromFormat($format, $info_list['deadline']);
         $date_errors = DateTime::getLastErrors();
         if ($date_errors['warning_count'] + $date_errors['error_count'] > 0) {
             $error_list['deadline'] = 'Неверный формат даты!';
