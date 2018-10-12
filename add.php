@@ -54,7 +54,7 @@ if (!$link) {
 		$error_list = [];
 
 		// Валидация формы
-		$error_list = do_validate_form($info_list, $required_list, $projects);
+		$error_list = do_validate_task_form($info_list, $required_list, $projects);
 		$error_list += do_validate_date($info_list);
 
 
@@ -62,7 +62,7 @@ if (!$link) {
 		if(empty($error_list)) {
 			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$user_id.', `name` = "'.$info_list['name'].'"';
 
-			if(!empty($_FILES['preview'])) {
+			if(!empty($_FILES['preview']['name'])) {
 			    $file_name = $_FILES['preview']['name'];
 				$file_path = __DIR__ . '/uploads/';
 				$file_url = '/uploads/' . $file_name;
@@ -70,7 +70,7 @@ if (!$link) {
 				move_uploaded_file($_FILES['preview']['tmp_name'], $file_path . $file_name);
 				$info_list['file_path'] = $file_url;
 				$sql .= ', `file_name` = "' . $file_name . '", `file_path` = "' . $file_url . '"';
-			} 
+			}
 
 			if (!empty($info_list['deadline'])) {
 				$sql .= ', `deadline` = date("'.$info_list['deadline'].'")';
@@ -101,6 +101,4 @@ if (!$link) {
 	]);
 }
 
-print_r($info_list);
-print_r($error_list);
 echo $layout_content;
