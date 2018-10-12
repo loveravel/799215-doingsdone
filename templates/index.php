@@ -9,9 +9,9 @@
 <div class="tasks-controls">
 	<nav class="tasks-switch">
 		<a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-		<a href="/" class="tasks-switch__item">Повестка дня</a>
-		<a href="/" class="tasks-switch__item">Завтра</a>
-		<a href="/" class="tasks-switch__item">Просроченные</a>
+		<a href="/?show_tasks=for_today" class="tasks-switch__item">Повестка дня</a>
+		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item">Завтра</a>
+		<a href="/?show_tasks=overdue" class="tasks-switch__item">Просроченные</a>
 	</nav>
 
 	<label class="checkbox">
@@ -39,7 +39,9 @@
 			</td>
 
 			<td class="task__file">
-				<a class="download-link" href="#">Home.psd</a>
+                <?php if($value['file_path']): ?>
+				    <a class="download-link" href="<?= $value['file_path']?>"><?= $value['file_name']; ?></a>
+                <? endif; ?>
 			</td>
 
 			<td class="task__date"><?=$value['deadline'];?></td>
