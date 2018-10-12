@@ -72,8 +72,8 @@ if (!$link) {
 				$sql .= ', `file_name` = "' . $file_name . '", `file_path` = "' . $file_url . '"';
 			} 
 
-			if (!empty($deadline_form)) {
-				$sql .= ', `deadline` = "'.$info_list['deadline'].'"';
+			if (!empty($info_list['deadline'])) {
+				$sql .= ', `deadline` = date("'.$info_list['deadline'].'")';
 			}
 			
 			$result = mysqli_query($link, $sql);
