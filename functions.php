@@ -81,8 +81,8 @@ function do_validate_date($info_list) {
     return $error_list;
 }
 
-// Валидация формы
-function do_validate_form($info_list, $required_fields, $projects) {
+// Валидация формы добавления задач
+function do_validate_task_form($info_list, $required_fields, $projects) {
 	$error_list = [];
 
 	foreach ($required_fields as $field) {
@@ -99,4 +99,29 @@ function do_validate_form($info_list, $required_fields, $projects) {
     }
 
 	return $error_list;
+}
+
+// Валидация формы регистрации
+function do_validate_register_form ($link, $info_list, $required_fields) {
+    $error_list = [];
+
+    foreach ($required_fields as $field) {
+        if (empty($info_list[$field])) {
+            $error_list[$field] = 'Заполните поле!';
+        }
+    }
+
+    if (!isset($error_list['email'])) {
+        if(!filter_var($info_list['email'], FILTER_VALIDATE_EMAIL)) {
+            $error_list['email'] = 'e-mail  введен некорректно!';
+        } else {
+            $sql = 'SELECT * FROM `users` WHERE `email` = "' . $info_list['email'] . '"';
+            $result = mysqli_query($link, $sql);
+            if(mysqli_num_rows($result) > 0) {
+                $error_list['email'] = 'Пользователь с таким e-mail уже существует!';
+            }
+        }
+    }
+
+    return $error_list;
 }

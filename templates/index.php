@@ -39,7 +39,7 @@
 			</td>
 
 			<td class="task__file">
-                <?php if($value['file_path']): ?>
+                <?php if(!empty($value['file_path'])) : ?>
 				    <a class="download-link" href="<?= $value['file_path']?>"><?= $value['file_name']; ?></a>
                 <? endif; ?>
 			</td>
