@@ -31,7 +31,7 @@ if (!$link) {
         if(empty($error_list)) {
             $password = password_hash($info_list['password'], PASSWORD_DEFAULT);
 
-            $sql = 'INSERT INTO `users` SET `email` = "' . $info_list['email'] . '" `name` = "' . $info_list['name'] . '" `password` = "' . $password . '"';
+            $sql = 'INSERT INTO `users` SET `email` = "'.$info_list['email'].'", `name` = "'.$info_list['name'].'", `password` = "'.$password.'"';
             $result = mysqli_query($link, $sql);
 
             if ($result) {
@@ -53,4 +53,6 @@ if (!$link) {
     ]);
 }
 
+print_r($info_list);
+echo $password;
 echo $layout_content;

@@ -115,7 +115,7 @@ function do_validate_register_form ($link, $info_list, $required_fields) {
         if(!filter_var($info_list['email'], FILTER_VALIDATE_EMAIL)) {
             $error_list['email'] = 'e-mail  введен некорректно!';
         } else {
-            $sql = 'SELECT * FROM `users` WHERE `email` = "' . $info_list['email'] . '"';
+            $sql = 'SELECT `id` FROM `users` WHERE `email` = "'.$info_list['email'].'"';
             $result = mysqli_query($link, $sql);
             if(mysqli_num_rows($result) > 0) {
                 $error_list['email'] = 'Пользователь с таким e-mail уже существует!';

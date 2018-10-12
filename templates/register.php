@@ -15,7 +15,8 @@
     <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
-        <input class="form__input <?= isset($error_list['password']) ? 'form__input--error' : ''; ?>" type="password" name="password" id="password" value="" placeholder="Введите пароль">
+        <input class="form__input <?= isset($error_list['password']) ? 'form__input--error' : ''; ?>" type="password" name="password" id="password"
+               value="<?= isset($info_list['password']) ? $info_list['password'] : ''; ?>" placeholder="Введите пароль">
 
         <p class="form__message">
             <?= isset($error_list['password']) ? $error_list['password'] : ''; ?>
