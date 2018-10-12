@@ -18,7 +18,7 @@ function include_template($name, $data) {
 };
 
 // Запрос к БД
-function get_info ($link, $sql, $user_id) {
+function get_info ($link, $sql) {
 	$result = mysqli_query($link, $sql);
 	if (!$result) {
 		$info['error'] = mysqli_error($link);
@@ -63,4 +63,40 @@ function important_task($task) {
 	} else {
 		return false;
 	}
+}
+
+// Валидация даты
+function do_validate_date($info_list) {
+    $error_list = [];
+
+    if (!empty($info_list['deadline'])) {
+        $format = 'Y-m-d';
+        DateTime::createFromFormat($format, $info_list['deadline']);
+        $date_errors = DateTime::getLastErrors();
+        if ($date_errors['warning_count'] + $date_errors['error_count'] > 0) {
+            $error_list['deadline'] = 'Неверный формат даты!';
+        }
+    }
+
+    return $error_list;
+}
+
+// Валидация формы
+function do_validate_form($info_list, $required_fields, $projects) {
+	$error_list = [];
+
+	foreach ($required_fields as $field) {
+		if (empty($info_list[$field])) {
+			$error_list[$field] = 'Заполните поле!';
+		}
+	}
+
+	foreach ($projects as $value) {
+	    $project_id_list[] = $value['id'];
+    }
+	if (!in_array($info_list['project'], $project_id_list)) {
+	    $error_list['project'] = 'Проекта не существует!';
+    }
+
+	return $error_list;
 }
