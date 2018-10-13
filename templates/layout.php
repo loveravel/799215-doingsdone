@@ -43,8 +43,8 @@
 				<nav class="main-navigation">
 					<ul class="main-navigation__list">
 						<?php foreach ($projects as $value):?>
-							<li class="main-navigation__list-item">
-								<a class="main-navigation__list-item-link" 
+							<li class="main-navigation__list-item <?= ($value['id'] === $_GET['project_id']) ? 'main-navigation__list-item--active' : ''; ?>">
+								<a class="main-navigation__list-item-link"
 									<?=(!$value['id']) ? 'href="/"' : 'href="/?project_id='.$value['id'].'"'; ?>>
 									<?= $value['name']; ?>
 								</a>
