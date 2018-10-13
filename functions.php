@@ -102,7 +102,7 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
     } else {
         $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
     }
-    
+
 	return $error_list;
 }
 
@@ -172,4 +172,15 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
     }
 
     return $info;
+}
+
+function  update_task_status ($link, $info_status_list) {
+    $sql = 'UPDATE `tasks` SET `status` = '.$info_status_list['status'].' WHERE id = '.$info_status_list['task_id'];
+    $result = mysqli_query($link, $sql);
+
+    if (!$result) {
+        $result['error'];
+    }
+
+    return $result;
 }

@@ -19,6 +19,19 @@ if (!$link) {
 	$error = mysqli_connect_error();
 	echo include_template('error.php', ['error' => $error]);
 } else {
+    if (isset($_GET['task_id']) && isset($_GET['check'])) {
+        intval($_GET['task_id']);
+
+        $info_status_list['task_id'] = $_GET['task_id'];
+        $info_status_list['status'] = $_GET['check'];
+        print_r($info_status_list);
+        $result = update_task_status($link, $info_status_list);
+        if (isset($result['error'])) {
+            $error['update_task_status'] = $result['error'];
+        } else {
+            //header("Location: /");
+        }
+    }
 
 	// Запрос для получения проектов у текущего пользователя
 	$sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
