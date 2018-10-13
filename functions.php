@@ -94,9 +94,14 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
 	foreach ($projects as $value) {
 	    $project_id_list[] = $value['id'];
     }
-	if (!in_array($info_list['project'], $project_id_list)) {
-	    $error_list['project'] = 'Проекта не существует!';
+
+    if (isset($info_list['project'])) {
+        if (!in_array($info_list['project'], $project_id_list)) {
+            $error_list['project'] = 'Проекта не существует!';
+        }
     }
+        $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
+
 
 	return $error_list;
 }
@@ -115,7 +120,7 @@ function do_validate_register_form ($link, $info_list, $required_fields) {
         if(!filter_var($info_list['email'], FILTER_VALIDATE_EMAIL)) {
             $error_list['email'] = 'e-mail  введен некорректно!';
         } else {
-            $sql = 'SELECT `id` FROM `users` WHERE `email` = "'.$info_list['email'].'"';
+            $sql = 'SELECT * FROM `users` WHERE `email` = "'.$info_list['email'].'"';
             $result = mysqli_query($link, $sql);
             if(mysqli_num_rows($result) > 0) {
                 $error_list['email'] = 'Пользователь с таким e-mail уже существует!';
@@ -124,4 +129,35 @@ function do_validate_register_form ($link, $info_list, $required_fields) {
     }
 
     return $error_list;
+}
+
+function do_validate_auth_form ($link, $info_list, $required_fields) {
+    $info['error_list'] = [];
+
+    foreach ($required_fields as $field) {
+        if (empty($info_list[$field])) {
+            $info['error_list'][$field] = 'Заполните поле!';
+        }
+    }
+
+    $sql = 'SELECT * FROM `users` WHERE `email` = "' . $info_list['email'] . '"';
+    $result = mysqli_query($link, $sql);
+
+    $user = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : null;
+
+    if (empty($info['error_list']['email'])) {
+        if (mysqli_num_rows($result) === 0) {
+            $info['error_list']['email'] = 'Пользователя с таким e-mail не существует!';
+        }
+    }
+
+    if (!count($info['error_list']) && $user) {
+        if (password_verify($info_list['password'], $user[0]['password'])) {
+            $_SESSION['user'] = $user;
+        } else {
+            $info['error_list']['password'] = 'Неверный пароль!';
+        }
+    }
+
+    return $info;
 }
