@@ -63,7 +63,7 @@ if (!$link) {
 
 		// Добавление задачи в БД
 		if(empty($error_list)) {
-			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$user_id.', `name` = "'.$info_list['name'].'"';
+			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$_SESSION['user'][0]['id'].', `name` = "'.$info_list['name'].'"';
 
 			if(!empty($_FILES['preview']['name'])) {
 			    $file_name = $_FILES['preview']['name'];

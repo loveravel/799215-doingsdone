@@ -99,11 +99,23 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
         if (!in_array($info_list['project'], $project_id_list)) {
             $error_list['project'] = 'Проекта не существует!';
         }
-    }
+    } else {
         $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
-
-
+    }
+    
 	return $error_list;
+}
+
+function do_validate_project_form($info_list, $required_fields) {
+    $error_list = [];
+
+    foreach ($required_fields as $field) {
+        if (empty($info_list[$field])) {
+            $error_list[$field] = 'Заполните поле!';
+        }
+    }
+
+    return $error_list;
 }
 
 // Валидация формы регистрации
