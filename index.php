@@ -24,12 +24,12 @@ if (!$link) {
 
         $info_status_list['task_id'] = $_GET['task_id'];
         $info_status_list['status'] = $_GET['check'];
-
+        print_r($info_status_list);
         $result = update_task_status($link, $info_status_list);
         if (isset($result['error'])) {
             $error['update_task_status'] = $result['error'];
         } else {
-            header("Location: /");
+            //header("Location: /");
         }
     }
 
@@ -42,7 +42,7 @@ if (!$link) {
 	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Запрос для получения списка задач
-    $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'].' ORDER BY `id` DESC';
+    $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
 	if (isset($_GET['project_id'])) {
 		$project_id = $_GET['project_id'];
 		$sql .= '&& `project_id` = '.$project_id;
