@@ -48,6 +48,11 @@
 	</div>
 
 	<div class="form__row form__row--controls">
+
+        <?php if($error_list): ?>
+            <p class="error-message">Пожалуйста, исправьте ошибки в форме</p>
+        <? endif; ?>
+
 		<input class="button" type="submit" name="" value="Добавить">
 	</div>
 </form>
