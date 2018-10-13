@@ -21,28 +21,19 @@ if (!$link) {
             $value = mysqli_real_escape_string($link, $value);
         }
 
-        $required_list = ['email','password','name'];
-        $error_list = [];
+        $required_list = ['email','password'];
 
         // Валидация формы
-        $error_list = do_validate_register_form($link, $info_list, $required_list);
+        $info = do_validate_auth_form($link, $info_list, $required_list);
 
-        // Добавление задачи в БД
-        if(empty($error_list)) {
-            $password = password_hash($info_list['password'], PASSWORD_DEFAULT);
+        $error_list = $info['error_list'];
 
-            $sql = 'INSERT INTO `users` SET `email` = "'.$info_list['email'].'", `name` = "'.$info_list['name'].'", `password` = "'.$password.'"';
-            $result = mysqli_query($link, $sql);
-
-            if ($result) {
-                header("Location: /");
-            } else {
-                $content = include_template('error.php', ['error' => mysqli_error($link)]);
-            }
+        if (empty($info['error_list'])) {
+            header("Location: /");
         }
     }
 
-    $content = include_template('register.php', [
+    $content = include_template('auth.php', [
         'info_list' => $info_list,
         'error_list' => $error_list
     ]);

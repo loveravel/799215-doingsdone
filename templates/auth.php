@@ -1,4 +1,4 @@
-<form class="form" action="index.html" method="post">
+<form class="form" action="auth.php" method="post">
     <div class="form__row">
         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
@@ -15,6 +15,10 @@
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
         <input class="form__input <?= isset($error_list['password']) ? 'form__input--error' : ''; ?>" type="password" name="password" id="password" value="" placeholder="Введите пароль">
+
+        <p class="form__message">
+            <?= isset($error_list['password']) ? $error_list['password'] : ''; ?>
+        </p>
     </div>
 
     <div class="form__row form__row--controls">
