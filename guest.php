@@ -2,7 +2,7 @@
 
 require_once 'init.php';
 
-if(isset($_SESSION['user'])) {
+if (isset($_SESSION['user'])) {
     header("Location: /");
 }
 
@@ -17,7 +17,6 @@ if (!$link) {
 
     $info_list = [];
     $error_list = [];
-    $info['error_list'] = [];
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $info_list = $_POST;
@@ -35,14 +34,10 @@ if (!$link) {
 
         if (empty($info['error_list'])) {
             header("Location: /");
-            exit();
         }
     }
 
-    $content = include_template('auth.php', [
-        'info_list' => $info_list,
-        'error_list' => $error_list
-    ]);
+    $content = include_template('guest.php', []);
 
     $layout_content = include_template('layout.php', [
         'title' => 'Дела в порядке',

@@ -2,6 +2,11 @@
 
 require_once 'init.php';
 
+if (!isset($_SESSION['user'])) {
+    header("Location: /guest.php");
+    exit();
+}
+
 if (!$link) {
 	$error['error_connect'] = mysqli_connect_error();
 	$content = include_template('error.php', ['error' => $error]);
@@ -11,7 +16,6 @@ if (!$link) {
 	]);
 } else {
 
-	$user_id = 1;
 	if(isset($_GET['show_completed'])) {
 		$show_complete_tasks = $_GET['show_completed'];
 		settype($project_id, 'integer');
@@ -30,17 +34,17 @@ if (!$link) {
 	$error_list = [];
 
 	// Запрос для получения данных о пользователе по id
-	$sql = 'SELECT * FROM `users` WHERE `id` = 1';
-	$user = get_info($link, $sql, $user_id);
+	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
+	$user = get_info($link, $sql, $_SESSION['user'][0]['id']);
 	$username = $user[0]['name'];
 
 	// Запрос для получения проектов у текущего пользователя
-	$sql = 'SELECT * FROM `projects` WHERE `user_id` = 1';
-	$projects = get_info($link, $sql, $user_id);
+	$sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
+	$projects = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Запрос для получения списка всех задач
-	$sql = 'SELECT * FROM `tasks` WHERE `user_id` = 1';
-	$all_tasks = get_info($link, $sql, $user_id);
+	$sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
+	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Обработка данных из формы
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -56,7 +60,6 @@ if (!$link) {
 		// Валидация формы
 		$error_list = do_validate_task_form($info_list, $required_list, $projects);
 		$error_list += do_validate_date($info_list);
-
 
 		// Добавление задачи в БД
 		if(empty($error_list)) {
@@ -94,7 +97,6 @@ if (!$link) {
 	
 	$layout_content = include_template('layout.php', [
 		'title' => 'Дела в порядке',
-		'username' => $username,
 		'projects' => $projects,
 		'all_tasks' => $all_tasks,
 		'content' => $content

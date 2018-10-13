@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 require_once 'mysql_helper.php';
 require_once 'functions.php';
 
@@ -8,3 +11,5 @@ mysqli_set_charset($link, "utf8");
 
 $projects = [];
 $tasks = [];
+
+$guest = FALSE;

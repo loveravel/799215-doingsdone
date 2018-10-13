@@ -94,9 +94,14 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
 	foreach ($projects as $value) {
 	    $project_id_list[] = $value['id'];
     }
-	if (!in_array($info_list['project'], $project_id_list)) {
-	    $error_list['project'] = 'Проекта не существует!';
+
+    if (isset($info_list['project'])) {
+        if (!in_array($info_list['project'], $project_id_list)) {
+            $error_list['project'] = 'Проекта не существует!';
+        }
     }
+        $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
+
 
 	return $error_list;
 }
