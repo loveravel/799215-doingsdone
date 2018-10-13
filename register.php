@@ -35,7 +35,7 @@ if (!$link) {
             $result = mysqli_query($link, $sql);
 
             if ($result) {
-                header("Location: /");
+                header("Location: /auth.php");
             } else {
                 $content = include_template('error.php', ['error' => mysqli_error($link)]);
             }
@@ -53,6 +53,4 @@ if (!$link) {
     ]);
 }
 
-print_r($info_list);
-echo $password;
 echo $layout_content;

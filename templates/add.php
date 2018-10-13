@@ -24,6 +24,9 @@
 			</option>
 			<?php endforeach;?>
 		</select>
+        <p class="form__message">
+            <span class="form__message error-message"><?= isset($error_list['project']) ? $error_list['project'] : ''; ?></span>
+        </p>
 	</div>
 
 	<div class="form__row">
