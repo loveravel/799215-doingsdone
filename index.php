@@ -2,15 +2,8 @@
 require_once 'init.php';
 
 if(isset($_GET['show_completed'])) {
+    intval($_GET['show_completed']);
 	$show_complete_tasks = $_GET['show_completed'];
-	settype($project_id, 'integer');
-} else {
-	$show_complete_tasks = '';
-}
-
-if(isset($_GET['show_tasks'])) {
-	$show_tasks = $_GET['show_tasks'];
-	settype($project_id, 'integer');
 } else {
 	$show_complete_tasks = '';
 }
@@ -24,12 +17,12 @@ if (!$link) {
 
         $info_status_list['task_id'] = $_GET['task_id'];
         $info_status_list['status'] = $_GET['check'];
-        print_r($info_status_list);
+        
         $result = update_task_status($link, $info_status_list);
         if (isset($result['error'])) {
             $error['update_task_status'] = $result['error'];
         } else {
-            //header("Location: /");
+            header("Location: /");
         }
     }
 
