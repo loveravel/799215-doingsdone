@@ -15,24 +15,6 @@ if (!$link) {
 		'content' => $content
 	]);
 } else {
-
-	if(isset($_GET['show_completed'])) {
-		$show_complete_tasks = $_GET['show_completed'];
-		settype($project_id, 'integer');
-	} else {
-		$show_complete_tasks = '';
-	}
-
-	if(isset($_GET['show_tasks'])) {
-		$show_tasks = $_GET['show_tasks'];
-		settype($project_id, 'integer');
-	} else {
-		$show_complete_tasks = '';
-	}
-
-	$info_list = [];
-	$error_list = [];
-
 	// Запрос для получения данных о пользователе по id
 	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
 	$user = get_info($link, $sql, $_SESSION['user'][0]['id']);
@@ -47,12 +29,8 @@ if (!$link) {
 	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Обработка данных из формы
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$info_list = $_POST;
-
-		foreach ($info_list as $value) {
-			$value = mysqli_real_escape_string($link, $value);
-		}
 
 		$required_list = ['name','project'];
 		$error_list = [];
@@ -61,9 +39,13 @@ if (!$link) {
 		$error_list = do_validate_task_form($info_list, $required_list, $projects);
 		$error_list += do_validate_date($info_list);
 
+        foreach ($info_list as $value) {
+            $value = mysqli_real_escape_string($link, $value);
+        }
+
 		// Добавление задачи в БД
 		if(empty($error_list)) {
-			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$user_id.', `name` = "'.$info_list['name'].'"';
+			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$_SESSION['user'][0]['id'].', `name` = "'.$info_list['name'].'"';
 
 			if(!empty($_FILES['preview']['name'])) {
 			    $file_name = $_FILES['preview']['name'];
@@ -82,7 +64,7 @@ if (!$link) {
 			$result = mysqli_query($link, $sql);
 
 			if ($result) {
-				header("Location: /");
+				header('Location: /');
 			} else {
 				$content = include_template('error.php', ['error' => mysqli_error($link)]);
 			}

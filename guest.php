@@ -3,7 +3,7 @@
 require_once 'init.php';
 
 if (isset($_SESSION['user'])) {
-    header("Location: /");
+    header('Location: /');
 }
 
 if (!$link) {
@@ -18,7 +18,7 @@ if (!$link) {
     $info_list = [];
     $error_list = [];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
         foreach ($info_list as $value) {
@@ -33,7 +33,7 @@ if (!$link) {
         $error_list = $info['error_list'];
 
         if (empty($info['error_list'])) {
-            header("Location: /");
+            header('Location: /');
         }
     }
 

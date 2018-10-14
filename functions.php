@@ -29,16 +29,6 @@ function get_info ($link, $sql) {
 	return $info_var;
 }
 
-// Запрос к БД (подготовленное выражение)
-function get_info_def ($link, $sql, $user_id) {
-	$result = mysqli_prepare($link, $sql);
-	$stmt = db_get_prepare_stmt($link, $sql, [$user_id]);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$info = mysqli_fetch_assoc($result);
-	return $info;
-}
-
 // Подсчет количества задач в проекте
 function get_amount_tasks($all_tasks, $project_id) {
 
@@ -81,15 +71,23 @@ function do_validate_date($info_list) {
     return $error_list;
 }
 
+// Проверка обязательных полей на заполненность
+function do_validate_required_fields($info_list, $required_fields) {
+    $error_list = [];
+
+    foreach ($required_fields as $field) {
+        if (empty($info_list[$field])) {
+            $error_list[$field] = 'Заполните поле!';
+        }
+    }
+
+    return $error_list;
+}
+
 // Валидация формы добавления задач
 function do_validate_task_form($info_list, $required_fields, $projects) {
-	$error_list = [];
 
-	foreach ($required_fields as $field) {
-		if (empty($info_list[$field])) {
-			$error_list[$field] = 'Заполните поле!';
-		}
-	}
+    $error_list = do_validate_required_fields($info_list, $required_fields);
 
 	foreach ($projects as $value) {
 	    $project_id_list[] = $value['id'];
@@ -99,22 +97,16 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
         if (!in_array($info_list['project'], $project_id_list)) {
             $error_list['project'] = 'Проекта не существует!';
         }
-    }
+    } else {
         $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
-
+    }
 
 	return $error_list;
 }
 
 // Валидация формы регистрации
 function do_validate_register_form ($link, $info_list, $required_fields) {
-    $error_list = [];
-
-    foreach ($required_fields as $field) {
-        if (empty($info_list[$field])) {
-            $error_list[$field] = 'Заполните поле!';
-        }
-    }
+    $error_list = do_validate_required_fields($info_list, $required_fields);
 
     if (!isset($error_list['email'])) {
         if(!filter_var($info_list['email'], FILTER_VALIDATE_EMAIL)) {
@@ -160,4 +152,15 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
     }
 
     return $info;
+}
+
+function  update_task_status ($link, $info_status_list) {
+    $sql = 'UPDATE `tasks` SET `status` = '.$info_status_list['check'].' WHERE id = '.$info_status_list['task_id'];
+    $result = mysqli_query($link, $sql);
+
+    if (!$result) {
+        $result['error'];
+    }
+
+    return $result;
 }

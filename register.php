@@ -10,11 +10,7 @@ if (!$link) {
         'content' => $content
     ]);
 } else {
-
-    $info_list = [];
-    $error_list = [];
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
         foreach ($info_list as $value) {
@@ -22,7 +18,6 @@ if (!$link) {
         }
 
         $required_list = ['email','password','name'];
-        $error_list = [];
 
         // Валидация формы
         $error_list = do_validate_register_form($link, $info_list, $required_list);
@@ -35,7 +30,7 @@ if (!$link) {
             $result = mysqli_query($link, $sql);
 
             if ($result) {
-                header("Location: /auth.php");
+                header('Location: /auth.php');
             } else {
                 $content = include_template('error.php', ['error' => mysqli_error($link)]);
             }
@@ -47,7 +42,7 @@ if (!$link) {
         'error_list' => $error_list
     ]);
 
-    $layout_content = include_template('layout_unauthorized.php', [
+    $layout_content = include_template('layout.php', [
         'title' => 'Дела в порядке',
         'content' => $content
     ]);

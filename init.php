@@ -9,7 +9,12 @@ $link = mysqli_connect("localhost", "root", "", "doingsdone");
 
 mysqli_set_charset($link, "utf8");
 
+$result = [];
+
 $projects = [];
 $tasks = [];
 
-$guest = FALSE;
+$info_list = [];
+$error_list = [];
+
+$show_complete_tasks = NULL;
