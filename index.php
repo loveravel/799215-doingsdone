@@ -17,12 +17,12 @@ if (!$link) {
 
         $info_status_list['task_id'] = $_GET['task_id'];
         $info_status_list['status'] = $_GET['check'];
-        
+
         $result = update_task_status($link, $info_status_list);
         if (isset($result['error'])) {
             $error['update_task_status'] = $result['error'];
         } else {
-            header("Location: /");
+            header('Location: /');
         }
     }
 

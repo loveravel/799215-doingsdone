@@ -12,4 +12,3 @@ mysqli_set_charset($link, "utf8");
 $projects = [];
 $tasks = [];
 
-$guest = FALSE;

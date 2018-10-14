@@ -82,7 +82,7 @@ if (!$link) {
 			$result = mysqli_query($link, $sql);
 
 			if ($result) {
-				header("Location: /");
+				header('Location: /');
 			} else {
 				$content = include_template('error.php', ['error' => mysqli_error($link)]);
 			}

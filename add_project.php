@@ -3,7 +3,7 @@
 require_once 'init.php';
 
 if (!isset($_SESSION['user'])) {
-    header("Location: /guest.php");
+    header('Location: /guest.php');
     exit();
 }
 

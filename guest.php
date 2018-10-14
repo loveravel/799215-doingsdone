@@ -3,7 +3,7 @@
 require_once 'init.php';
 
 if (isset($_SESSION['user'])) {
-    header("Location: /");
+    header('Location: /');
 }
 
 if (!$link) {
@@ -33,7 +33,7 @@ if (!$link) {
         $error_list = $info['error_list'];
 
         if (empty($info['error_list'])) {
-            header("Location: /");
+            header('Location: /');
         }
     }
 
