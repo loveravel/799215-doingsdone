@@ -47,7 +47,7 @@ if (!$link) {
 	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Обработка данных из формы
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$info_list = $_POST;
 
 		$required_list = ['name','project'];

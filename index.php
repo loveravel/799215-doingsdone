@@ -47,7 +47,7 @@ if (!$link) {
 		intval($_GET['project_id']);
 		$project_existence = FALSE;
 		foreach ($projects as $value) {
-			if ($_GET['project_id'] == $value['id']) {
+			if ($_GET['project_id'] === $value['id']) {
 				$project_existence = TRUE;
 			}
 		}

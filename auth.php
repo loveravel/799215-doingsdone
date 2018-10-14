@@ -19,7 +19,7 @@ if (!$link) {
     $error_list = [];
     $info['error_list'] = [];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
         foreach ($info_list as $value) {
