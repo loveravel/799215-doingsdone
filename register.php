@@ -18,7 +18,6 @@ if (!$link) {
         }
 
         $required_list = ['email','password','name'];
-        $error_list = [];
 
         // Валидация формы
         $error_list = do_validate_register_form($link, $info_list, $required_list);
