@@ -1,17 +1,20 @@
 <?php
 require_once 'init.php';
 
-if(isset($_GET['show_completed'])) {
-    intval($_GET['show_completed']);
-	$show_complete_tasks = $_GET['show_completed'];
-} else {
-	$show_complete_tasks = '';
+if (!isset($_SESSION['user'])) {
+    header("Location: /guest.php");
+    exit();
 }
 
 if (!$link) {
 	$error = mysqli_connect_error();
 	echo include_template('error.php', ['error' => $error]);
 } else {
+    if(isset($_GET['show_completed'])) {
+        intval($_GET['show_completed']);
+        $show_complete_tasks = $_GET['show_completed'];
+    }
+
     if (isset($_GET['task_id']) && isset($_GET['check'])) {
         intval($_GET['task_id']);
 
@@ -33,6 +36,7 @@ if (!$link) {
 
 	// Запрос для получения списка задач
     $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
+
 	if (isset($_GET['project_id'])) {
 		$sql .= '&& `project_id` = '.$_GET['project_id'];
 	} elseif (isset($_GET['show_tasks'])) {
@@ -48,8 +52,6 @@ if (!$link) {
         }
     }
 	$tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
-
-
 
 	// Проверка проекта на существование
 	if (isset($_GET['project_id'])) {

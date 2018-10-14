@@ -15,10 +15,6 @@ if (!$link) {
         'content' => $content
     ]);
 } else {
-
-    $info_list = [];
-    $error_list = [];
-
     // Запрос для получения данных о пользователе по id
     $sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
     $user = get_info($link, $sql, $_SESSION['user'][0]['id']);
@@ -33,7 +29,7 @@ if (!$link) {
     $all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
     // Обработка данных из формы
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
         foreach ($info_list as $value) {
@@ -44,8 +40,7 @@ if (!$link) {
         $error_list = [];
 
         // Валидация формы
-        $error_list = do_validate_project_form($info_list, $required_list);
-        $error_list += do_validate_date($info_list);
+        $error_list = do_validate_required_fields($info_list, $required_list);
 
         // Добавление задачи в БД
         if(empty($error_list)) {

@@ -15,10 +15,6 @@ if (!$link) {
 		'content' => $content
 	]);
 } else {
-
-	$info_list = [];
-	$error_list = [];
-
 	// Запрос для получения данных о пользователе по id
 	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
 	$user = get_info($link, $sql, $_SESSION['user'][0]['id']);

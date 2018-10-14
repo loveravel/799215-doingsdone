@@ -33,7 +33,7 @@
 		>
 			<td class="task__select">
 				<label class="checkbox task__checkbox">
-					<input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $value['id']; ?>" <?=($value['status']) ? 'checked="checked"' : '' ; ?>>
+					<input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $value['id']; ?>" <?= ($value['status']) ? 'checked="checked"' : ''; ?>>
 					<span class="checkbox__text"><?=$value['name']?></span>
 				</label>
 			</td>
