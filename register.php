@@ -47,7 +47,7 @@ if (!$link) {
         'error_list' => $error_list
     ]);
 
-    $layout_content = include_template('layout_unauthorized.php', [
+    $layout_content = include_template('layout.php', [
         'title' => 'Дела в порядке',
         'content' => $content
     ]);
