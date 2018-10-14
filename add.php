@@ -16,20 +16,6 @@ if (!$link) {
 	]);
 } else {
 
-	if(isset($_GET['show_completed'])) {
-		$show_complete_tasks = $_GET['show_completed'];
-		settype($project_id, 'integer');
-	} else {
-		$show_complete_tasks = '';
-	}
-
-	if(isset($_GET['show_tasks'])) {
-		$show_tasks = $_GET['show_tasks'];
-		settype($project_id, 'integer');
-	} else {
-		$show_complete_tasks = '';
-	}
-
 	$info_list = [];
 	$error_list = [];
 

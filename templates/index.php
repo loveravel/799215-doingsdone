@@ -8,10 +8,10 @@
 
 <div class="tasks-controls">
 	<nav class="tasks-switch">
-		<a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-		<a href="/?show_tasks=for_today" class="tasks-switch__item">Повестка дня</a>
-		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item">Завтра</a>
-		<a href="/?show_tasks=overdue" class="tasks-switch__item">Просроченные</a>
+		<a href="/" class="tasks-switch__item <?= (!isset($_GET['show_tasks']) ? 'tasks-switch__item--active' : ''); ?>">Все задачи</a>
+		<a href="/?show_tasks=for_today" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'for_today') ? 'tasks-switch__item--active' : ''); ?>">Повестка дня</a>
+		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'for_tomorrow') ? 'tasks-switch__item--active' : ''); ?>">Завтра</a>
+		<a href="/?show_tasks=overdue" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'overdue') ? 'tasks-switch__item--active' : ''); ?>">Просроченные</a>
 	</nav>
 
 	<label class="checkbox">

@@ -15,10 +15,7 @@ if (!$link) {
     if (isset($_GET['task_id']) && isset($_GET['check'])) {
         intval($_GET['task_id']);
 
-        $info_status_list['task_id'] = $_GET['task_id'];
-        $info_status_list['status'] = $_GET['check'];
-
-        $result = update_task_status($link, $info_status_list);
+        $result = update_task_status($link, $_GET);
         if (isset($result['error'])) {
             $error['update_task_status'] = $result['error'];
         } else {
@@ -37,10 +34,22 @@ if (!$link) {
 	// Запрос для получения списка задач
     $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
 	if (isset($_GET['project_id'])) {
-		$project_id = $_GET['project_id'];
-		$sql .= '&& `project_id` = '.$project_id;
-	}
+		$sql .= '&& `project_id` = '.$_GET['project_id'];
+	} elseif (isset($_GET['show_tasks'])) {
+        mysqli_real_escape_string($link, $_GET['show_tasks']);
+        if (isset($_GET['show_tasks'])) {
+            if ($_GET['show_tasks'] === 'for_today') {
+                $sql .= '&& `deadline` >= CURRENT_DATE AND `deadline` < date_add(CURRENT_DATE, INTERVAL 1 day)';
+            } elseif ($_GET['show_tasks'] === 'for_tomorrow') {
+                $sql .= '&& `deadline` >= date_add(CURRENT_DATE, INTERVAL 1 day) AND `deadline` < date_add(CURRENT_DATE, INTERVAL 2 day);';
+            } elseif ($_GET['show_tasks'] === 'overdue') {
+                $sql .= '&& `deadline` < CURRENT_DATE';
+            }
+        }
+    }
 	$tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
+
+
 
 	// Проверка проекта на существование
 	if (isset($_GET['project_id'])) {
