@@ -35,7 +35,7 @@ if (!$link) {
 	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Запрос для получения списка задач
-    $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
+    $sql = 'SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline` FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
 
 	if (isset($_GET['project_id'])) {
 		$sql .= '&& `project_id` = '.$_GET['project_id'];
