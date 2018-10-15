@@ -31,10 +31,7 @@ if (!$link) {
     // Обработка данных из формы
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
-
-        foreach ($info_list as $value) {
-            $value = mysqli_real_escape_string($link, $value);
-        }
+        $info_list['name'] = mysqli_real_escape_string($link, $info_list['name']);
 
         $required_list = ['name'];
         $error_list = [];
