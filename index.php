@@ -37,11 +37,12 @@ if (!$link) {
 	// Запрос для получения списка задач
     $sql = 'SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline` FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
 
-	if (isset($_GET['project_id'])) {
-		$sql .= '&& `project_id` = '.$_GET['project_id'];
-	} elseif (isset($_GET['show_tasks'])) {
-        mysqli_real_escape_string($link, $_GET['show_tasks']);
+    if (isset($_GET)) {
+        if (isset($_GET['project_id'])) {
+            $sql .= '&& `project_id` = '.$_GET['project_id'];
+        }
         if (isset($_GET['show_tasks'])) {
+            mysqli_real_escape_string($link, $_GET['show_tasks']);
             if ($_GET['show_tasks'] === 'for_today') {
                 $sql .= '&& `deadline` >= CURRENT_DATE AND `deadline` < date_add(CURRENT_DATE, INTERVAL 1 day)';
             } elseif ($_GET['show_tasks'] === 'for_tomorrow') {
@@ -51,6 +52,7 @@ if (!$link) {
             }
         }
     }
+
 	$tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Проверка проекта на существование

@@ -28,7 +28,7 @@
                             <img src="img/user-pic.jpg" width="40" height="40" alt="Пользователь">
                         </div>
                         <div class="user-menu__data">
-                            <p><?= $_SESSION['user'][0]['name']; ?></p>
+                            <p><?= htmlspecialchars($_SESSION['user'][0]['name']); ?></p>
 
                             <a href="logout.php">Выйти</a>
                         </div>
@@ -50,7 +50,7 @@
                                 <li class="main-navigation__list-item <?= ($value['id'] === $_GET['project_id']) ? 'main-navigation__list-item--active' : ''; ?>">
                                     <a class="main-navigation__list-item-link"
                                         <?=(!$value['id']) ? 'href="/"' : 'href="/?project_id='.$value['id'].'"'; ?>>
-                                        <?= $value['name']; ?>
+                                        <?= htmlspecialchars($value['name']); ?>
                                     </a>
                                     <span class="main-navigation__list-item-count"><?= get_amount_tasks($all_tasks, $value['id']); ?></span>
                                 </li>

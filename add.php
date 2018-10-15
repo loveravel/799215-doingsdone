@@ -33,7 +33,6 @@ if (!$link) {
 		$info_list = $_POST;
 
 		$required_list = ['name','project'];
-		$error_list = [];
 
 		// Валидация формы
 		$error_list = do_validate_task_form($info_list, $required_list, $projects);
