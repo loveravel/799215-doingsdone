@@ -34,7 +34,6 @@ if (!$link) {
         $info_list['name'] = mysqli_real_escape_string($link, $info_list['name']);
 
         $required_list = ['name'];
-        $error_list = [];
 
         // Валидация формы
         $error_list = do_validate_required_fields($info_list, $required_list);

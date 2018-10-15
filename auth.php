@@ -14,17 +14,13 @@ if (!$link) {
         'content' => $content
     ]);
 } else {
-
-    $info_list = [];
-    $error_list = [];
     $info['error_list'] = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
-        foreach ($info_list as $value) {
-            $value = mysqli_real_escape_string($link, $value);
-        }
+        $info_list['name'] = mysqli_real_escape_string($link, $info_list['name']);
+        $info_list['password'] = mysqli_real_escape_string($link, $info_list['password']);
 
         $required_list = ['email','password'];
 
