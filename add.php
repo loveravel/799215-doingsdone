@@ -31,17 +31,13 @@ if (!$link) {
 	// Обработка данных из формы
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$info_list = $_POST;
+		$info_list['name'] = mysqli_real_escape_string($link, $info_list['name']);
 
 		$required_list = ['name','project'];
-		$error_list = [];
 
 		// Валидация формы
 		$error_list = do_validate_task_form($info_list, $required_list, $projects);
 		$error_list += do_validate_date($info_list);
-
-        foreach ($info_list as $value) {
-            $value = mysqli_real_escape_string($link, $value);
-        }
 
 		// Добавление задачи в БД
 		if(empty($error_list)) {

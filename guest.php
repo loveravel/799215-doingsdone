@@ -14,10 +14,6 @@ if (!$link) {
         'content' => $content
     ]);
 } else {
-
-    $info_list = [];
-    $error_list = [];
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 

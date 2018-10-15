@@ -42,7 +42,7 @@
 		<label class="form__label" for="preview">Файл</label>
 
 		<div class="form__input-file">
-			<input class="visually-hidden" type="file" name="preview" id="preview" value="">
+			<input class="visually-hidden" type="file" name="preview" id="preview" value="<?= isset($info_list['preview']) ? $info_list['preview'] : ''; ?>">
 
 			<label class="button button--transparent" for="preview">
 				<span>Выберите файл</span>
