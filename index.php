@@ -7,8 +7,12 @@ if (!isset($_SESSION['user'])) {
 }
 
 if (!$link) {
-	$error = mysqli_connect_error();
-	echo include_template('error.php', ['error' => $error]);
+    $error['error_connect'] = mysqli_connect_error();
+    $content = include_template('error.php', ['error' => $error]);
+    $layout_content = include_template('error.php', [
+        'title' => 'Дела в порядке',
+        'content' => $content
+    ]);
 } else {
     if(isset($_GET['show_completed'])) {
         intval($_GET['show_completed']);
