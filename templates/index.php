@@ -40,11 +40,11 @@
 
 			<td class="task__file">
                 <?php if(!empty($value['file_path'])) : ?>
-				    <a class="download-link" href="<?= $value['file_path']?>"><?= $value['file_name']; ?></a>
+				    <a class="download-link" href="<?= htmlspecialchars($value['file_path']); ?>"><?= htmlspecialchars($value['file_name']); ?></a>
                 <? endif; ?>
 			</td>
 
-			<td class="task__date"><?=$value['deadline'];?></td>
+			<td class="task__date"><?= htmlspecialchars($value['deadline']); ?></td>
 		</tr>
-	<?php endforeach;?>
+	<? endforeach; ?>
 </table>

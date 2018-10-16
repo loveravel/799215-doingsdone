@@ -3,6 +3,6 @@
 </header>
 <article>
 	<p class="error">
-		<?= $error ?>
+		<?= $error; ?>
 	</p>
 </article>

@@ -112,12 +112,11 @@ function do_validate_register_form ($link, $info_list, $required_fields) {
     if (!isset($error_list['email'])) {
         if(!filter_var($info_list['email'], FILTER_VALIDATE_EMAIL)) {
             $error_list['email'] = 'e-mail  введен некорректно!';
-        } else {
-            $sql = 'SELECT * FROM `users` WHERE `email` = "'.$info_list['email'].'"';
-            $result = mysqli_query($link, $sql);
-            if(mysqli_num_rows($result) > 0) {
-                $error_list['email'] = 'Пользователь с таким e-mail уже существует!';
-            }
+        }
+        $sql = 'SELECT * FROM `users` WHERE `email` = "'.$info_list['email'].'"';
+        $result = mysqli_query($link, $sql);
+        if(mysqli_num_rows($result) > 0) {
+            $error_list['email'] = 'Пользователь с таким e-mail уже существует!';
         }
     }
 
@@ -156,6 +155,7 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
 }
 
 function  update_task_status ($link, $info_status_list) {
+    $info_status_list = intval($info_status_list);
     $sql = 'UPDATE `tasks` SET `status` = '.$info_status_list['check'].' WHERE id = '.$info_status_list['task_id'];
     $result = mysqli_query($link, $sql);
 

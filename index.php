@@ -9,12 +9,10 @@ if (!isset($_SESSION['user'])) {
 $layout_content = check_connect($link, $layout_content);
 if (empty($layout_content)) {
     if(isset($_GET['show_completed'])) {
-        intval($_GET['show_completed']);
-        $show_complete_tasks = $_GET['show_completed'];
+        $show_complete_tasks = intval($_GET['show_completed']);
     }
 
     if (isset($_GET['task_id']) && isset($_GET['check'])) {
-        intval($_GET['task_id']);
 
         $result = update_task_status($link, $_GET);
         if (isset($result['error'])) {
@@ -35,27 +33,26 @@ if (empty($layout_content)) {
 	// Запрос для получения списка задач
     $sql = 'SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline` FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
 
-    if (isset($_GET)) {
-        if (isset($_GET['project_id'])) {
-            $sql .= '&& `project_id` = '.$_GET['project_id'];
-        }
-        if (isset($_GET['show_tasks'])) {
-            mysqli_real_escape_string($link, $_GET['show_tasks']);
-            if ($_GET['show_tasks'] === 'for_today') {
-                $sql .= '&& `deadline` >= CURRENT_DATE AND `deadline` < date_add(CURRENT_DATE, INTERVAL 1 day)';
-            } elseif ($_GET['show_tasks'] === 'for_tomorrow') {
-                $sql .= '&& `deadline` >= date_add(CURRENT_DATE, INTERVAL 1 day) AND `deadline` < date_add(CURRENT_DATE, INTERVAL 2 day);';
-            } elseif ($_GET['show_tasks'] === 'overdue') {
-                $sql .= '&& `deadline` < CURRENT_DATE';
-            }
+    if (isset($_GET['project_id'])) {
+            $sql .= '&& `project_id` = '.intval($_GET['project_id']);
+    }
+
+    if (isset($_GET['show_tasks'])) {
+        mysqli_real_escape_string($link, $_GET['show_tasks']);
+        if ($_GET['show_tasks'] === 'for_today') {
+            $sql .= '&& `deadline` >= CURRENT_DATE AND `deadline` < date_add(CURRENT_DATE, INTERVAL 1 day)';
+        } elseif ($_GET['show_tasks'] === 'for_tomorrow') {
+            $sql .= '&& `deadline` >= date_add(CURRENT_DATE, INTERVAL 1 day) AND `deadline` < date_add(CURRENT_DATE, INTERVAL 2 day);';
+        } elseif ($_GET['show_tasks'] === 'overdue') {
+            $sql .= '&& `deadline` < CURRENT_DATE';
         }
     }
+
 
 	$tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 
 	// Проверка проекта на существование
 	if (isset($_GET['project_id'])) {
-		intval($_GET['project_id']);
 		$project_existence = FALSE;
 		foreach ($projects as $value) {
 			if ($_GET['project_id'] === $value['id']) {
