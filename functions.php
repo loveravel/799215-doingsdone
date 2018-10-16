@@ -19,6 +19,7 @@ function include_template($name, $data) {
 
 // Запрос к БД
 function get_info ($link, $sql) {
+    $info = [];
 	$result = mysqli_query($link, $sql);
 	if (!$result) {
 		$info['error'] = mysqli_error($link);

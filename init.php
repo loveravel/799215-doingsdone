@@ -9,6 +9,8 @@ $link = mysqli_connect("localhost", "root", "", "doingsdone");
 
 mysqli_set_charset($link, "utf8");
 
+$layout_content = [];
+
 $result = [];
 
 $projects = [];
