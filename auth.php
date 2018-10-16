@@ -19,7 +19,7 @@ if (!$link) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
-        $info_list['name'] = mysqli_real_escape_string($link, $info_list['name']);
+        $info_list['email'] = mysqli_real_escape_string($link, $info_list['email']);
         $info_list['password'] = mysqli_real_escape_string($link, $info_list['password']);
 
         $required_list = ['email','password'];

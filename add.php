@@ -16,17 +16,17 @@ if (!$link) {
 	]);
 } else {
 	// Запрос для получения данных о пользователе по id
-	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
-	$user = get_info($link, $sql, $_SESSION['user'][0]['id']);
-	$username = $user[0]['name'];
+	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user']['id'];
+	$user = get_info($link, $sql, $_SESSION['user']['id']);
+	$username = $user['name'];
 
 	// Запрос для получения проектов у текущего пользователя
-	$sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
-	$projects = get_info($link, $sql, $_SESSION['user'][0]['id']);
+	$sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user']['id'];
+	$projects = get_info($link, $sql, $_SESSION['user']['id']);
 
 	// Запрос для получения списка всех задач
-	$sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
-	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
+	$sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user']['id'];
+	$all_tasks = get_info($link, $sql, $_SESSION['user']['id']);
 
 	// Обработка данных из формы
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -41,7 +41,7 @@ if (!$link) {
 
 		// Добавление задачи в БД
 		if(empty($error_list)) {
-			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$_SESSION['user'][0]['id'].', `name` = "'.$info_list['name'].'"';
+			$sql = 'INSERT INTO `tasks` SET `project_id` = '.$info_list['project'].', `user_id` = '.$_SESSION['user']['id'].', `name` = "'.$info_list['name'].'"';
 
 			if(!empty($_FILES['preview']['name'])) {
 			    $file_name = $_FILES['preview']['name'];

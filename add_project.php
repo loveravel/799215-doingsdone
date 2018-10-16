@@ -16,17 +16,17 @@ if (!$link) {
     ]);
 } else {
     // Запрос для получения данных о пользователе по id
-    $sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
+    $sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user']['id'];
     $user = get_info($link, $sql, $_SESSION['user'][0]['id']);
     $username = $user[0]['name'];
 
     // Запрос для получения проектов у текущего пользователя
-    $sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
-    $projects = get_info($link, $sql, $_SESSION['user'][0]['id']);
+    $sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user']['id'];
+    $projects = get_info($link, $sql, $_SESSION['user']['id']);
 
     // Запрос для получения списка всех задач
-    $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
-    $all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
+    $sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user']['id'];
+    $all_tasks = get_info($link, $sql, $_SESSION['user']['id']);
 
     // Обработка данных из формы
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
