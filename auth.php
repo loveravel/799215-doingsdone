@@ -6,14 +6,8 @@ if(isset($_SESSION['user'])) {
     header('Location: /');
 }
 
-if (!$link) {
-    $error['error_connect'] = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
-    $layout_content = include_template('error.php', [
-        'title' => 'Дела в порядке',
-        'content' => $content
-    ]);
-} else {
+$layout_content = check_connect($link, $layout_content);
+if (empty($layout_content)) {
     $info['error_list'] = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

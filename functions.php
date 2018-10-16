@@ -165,3 +165,16 @@ function  update_task_status ($link, $info_status_list) {
 
     return $result;
 }
+
+function check_connect ($link, $layout_content) {
+    if (!$link) {
+        $error['error_connect'] = mysqli_connect_error();
+        $content = include_template('error.php', ['error' => $error]);
+        $layout_content = include_template('error.php', [
+            'title' => 'Дела в порядке',
+            'content' => $content
+        ]);
+    }
+
+    return $layout_content;
+}
