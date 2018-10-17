@@ -7,8 +7,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$layout_content = check_connect($link, $layout_content);
-if (empty($layout_content)) {
+if ($link) {
 	// Запрос для получения данных о пользователе по id
 	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
 	$user = get_info($link, $sql, $_SESSION['user'][0]['id']);

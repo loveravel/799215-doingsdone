@@ -6,8 +6,7 @@ if (isset($_SESSION['user'])) {
     header('Location: /');
 }
 
-$layout_content = check_connect($link, $layout_content);
-if (empty($layout_content)) {
+if ($link) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 

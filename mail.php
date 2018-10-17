@@ -28,7 +28,7 @@ if ($result && mysqli_num_rows($result)) {
 
         foreach ($users as $key => $value) {
 	        $recipients[$value['email']] = $value['name'];
-	        $recipients_name[$key] = $value['name'];
+	        $recipients_name = $value['name'];
 
 	        $message = new Swift_Message();
 	        $message -> setSubject('Уведомление от сервиса «Дела в порядке»');
