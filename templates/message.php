@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<p>Уважаемый, <?= $recipients_name; ?>. На <?= $tasks[0]['deadline']; ?> у вас запланированы задачи: </p>
+<p>Уважаемый, <?= $username; ?>. На <?= $tasks[0]['deadline']; ?> у вас запланированы задачи: </p>
 
 <table>
     <tr>
@@ -19,7 +19,7 @@
 	<?php foreach ($tasks as $key => $value): ?>
         <tr>
             <td><?= $key+1; ?></td>
-            <td><?= strip_tags($value['name']); ?></td>
+            <td><?= $value['task_name']; ?></td>
         </tr>
 	<?php endforeach; ?>
     </tbody>

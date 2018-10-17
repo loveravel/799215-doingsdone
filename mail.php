@@ -13,38 +13,55 @@ $mailer = new Swift_Mailer($transport);
 $logger = new Swift_Plugins_Loggers_ArrayLogger();
 $mailer -> registerPlugin(new Swift_Plugins_LoggerPlugin($logger));
 
-$result = mysqli_query($link, 'SELECT * FROM `users` INNER JOIN `tasks` ON `tasks`.`user_id` = `users`.`id` WHERE `deadline` >= CURRENT_DATE AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 DAY)');
+$result = mysqli_query($link,
+	'SELECT `user_id`, `email`, `users`.`name` AS `username`, t.name AS task_name, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline`
+FROM `tasks` AS t 
+INNER JOIN `users` ON `users`.`id` = t.user_id
+WHERE `deadline` >= CURRENT_DATE
+AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 DAY)
+AND `status` = 0');
 
 if ($result && mysqli_num_rows($result)) {
-    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-	print_r($tasks);
-    $result = mysqli_query($link, 'SELECT * FROM `users`');
+	$tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    if ($result && mysqli_num_rows($result)) {
-        $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-		print_r($users);
-        $recipients = [];
-	    $recipients_name = [];
+	$result = mysqli_query($link, 'SELECT * FROM `users`');
 
-        foreach ($users as $key => $value) {
-	        $recipients[$value['email']] = $value['name'];
-	        $recipients_name = $value['name'];
+	if ($result && mysqli_num_rows($result)) {
+		$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-	        $message = new Swift_Message();
-	        $message -> setSubject('Уведомление от сервиса «Дела в порядке»');
-	        $message -> setFrom(['keks@phpdemo.ru' => 'Keks']);
-	        $message -> setBcc($recipients);
+		$recipients = [];
+		$users = [];
+		$user_tasks = [];
 
-	        $message_content = include_template('message.php', ['recipients_name' => $recipients_name, 'tasks' => $tasks]);
-	        $message -> setBody($message_content, 'text/html');
+		foreach ($tasks as $value) {
+			$users[$value['user_id']][] = [
+				'username' => $value['username'],
+				'email' => $value['email'],
+				'task_name' => $value['task_name'],
+				'deadline' => $value['deadline']
+			];
+		}
+		print_r($tasks);
+		foreach ($users as $key => $value) {
+			$recipients = $value[0]['email'];
+			$username = $value[0]['username'];
+			$user_tasks = $value;
 
-	        $result_send = $mailer -> send($message);
-        }
+			$message = new Swift_Message();
+			$message -> setSubject('Уведомление от сервиса «Дела в порядке»');
+			$message -> setFrom(['keks@phpdemo.ru' => 'Keks']);
+			$message -> setBcc($recipients);
 
-        if ($result_send) {
-            echo 'Рассылка прошла успешно';
-        } else {
-            echo 'Не удалось отправить рассылку: '.$logger -> dump();
-        }
-    }
+			$message_content = include_template('message.php', ['username' => $username, 'tasks' => $tasks]);
+			$message -> setBody($message_content, 'text/html');
+
+			$result_send = $mailer -> send($message);
+		}
+
+		if ($result_send) {
+			echo 'Рассылка прошла успешно';
+		} else {
+			echo 'Не удалось отправить рассылку: '.$logger -> dump();
+		}
+	}
 }
