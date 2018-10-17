@@ -72,6 +72,7 @@ if ($link) {
 
 	$content = include_template('index.php', [
 		'tasks' => $tasks,
+		'search' => $search,
 		'show_complete_tasks' => $show_complete_tasks
 	]);
 
