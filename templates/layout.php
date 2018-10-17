@@ -33,9 +33,9 @@
                             <a href="logout.php">Выйти</a>
                         </div>
                     </div>
-                <? else : ?>
+                <?php else : ?>
                     <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
-                <? endif; ?>
+                <?php endif; ?>
 			</div>
 		</header>
 
@@ -60,11 +60,11 @@
 
                     <a class="button button--transparent button--plus content__side-button"
                        href="add_project.php" target="project_add">Добавить проект</a>
-                <? else : ?>
+                <?php else : ?>
                     <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
                     <a class="button button--transparent content__side-button" href="auth.php">Войти</a>
-                <? endif; ?>
+                <?php endif; ?>
 			</section>
 
 			<main class="content__main">
@@ -84,7 +84,7 @@
 
         <?php if(isset($_SESSION['user'])) : ?>
 		    <a class="main-footer__button button button--plus" href="add.php">Добавить задачу</a>
-        <? endif; ?>
+        <?php endif; ?>
 
 		<div class="main-footer__social social">
 			<span class="visually-hidden">Мы в соцсетях:</span>

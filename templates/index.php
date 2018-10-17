@@ -23,13 +23,13 @@
 <table class="tasks">
 	<?php foreach ($tasks as $key => $value): ?>
 		<?php
-		if(!$show_complete_tasks && $value['status']) {
+		if (!$show_complete_tasks && $value['status']) {
 			continue;
 		}
 		?>
 		<tr class="tasks__item task
-			<?=($value['status']) ? 'task--completed' : '';?>
-			<?=(important_task($value)) ? 'task--important' : '';?>"
+			<?= ($value['status']) ? 'task--completed' : ''; ?>
+			<?= (important_task($value)) ? 'task--important' : ''; ?>"
 		>
 			<td class="task__select">
 				<label class="checkbox task__checkbox">
@@ -39,12 +39,12 @@
 			</td>
 
 			<td class="task__file">
-                <?php if(!empty($value['file_path'])) : ?>
+                <?php if (!empty($value['file_path'])) : ?>
 				    <a class="download-link" href="<?= htmlspecialchars($value['file_path']); ?>"><?= htmlspecialchars($value['file_name']); ?></a>
-                <? endif; ?>
+                <?php endif; ?>
 			</td>
 
 			<td class="task__date"><?= htmlspecialchars($value['deadline']); ?></td>
 		</tr>
-	<? endforeach; ?>
+	<?php endforeach; ?>
 </table>

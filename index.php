@@ -6,8 +6,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$layout_content = check_connect($link, $layout_content);
-if (empty($layout_content)) {
+if ($link) {
     if(isset($_GET['show_completed'])) {
         $show_complete_tasks = intval($_GET['show_completed']);
     }
@@ -47,7 +46,6 @@ if (empty($layout_content)) {
             $sql .= '&& `deadline` < CURRENT_DATE';
         }
     }
-
 
 	$tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
 

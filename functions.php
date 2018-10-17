@@ -155,7 +155,8 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
 }
 
 function  update_task_status ($link, $info_status_list) {
-    $info_status_list = intval($info_status_list);
+    $info_status_list['check'] = intval($info_status_list['check']);
+    $info_status_list['task_id'] = intval($info_status_list['task_id']);
     $sql = 'UPDATE `tasks` SET `status` = '.$info_status_list['check'].' WHERE id = '.$info_status_list['task_id'];
     $result = mysqli_query($link, $sql);
 
