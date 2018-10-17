@@ -21,13 +21,10 @@ if (!$link) {
 
 $content = [];
 $layout_content = [];
-
 $result = [];
-
 $projects = [];
 $tasks = [];
-
+$tasks_search = [];
 $info_list = [];
 $error_list = [];
-
 $show_complete_tasks = NULL;

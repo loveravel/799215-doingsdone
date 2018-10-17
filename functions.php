@@ -4,7 +4,7 @@
  * @param string $name Имя шаблона
  * @param array $data Массив данных для шаблона
  *
- * @return boolean $result Статус задачи
+ * @return string $result Подключаемый шаблон
  */
 function include_template($name, $data) {
 	$name = 'templates/' . $name;
@@ -217,7 +217,7 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
  *
  * @return boolean $result Статус задачи
  */
-function  update_task_status ($link, $info_status_list) {
+function update_task_status ($link, $info_status_list) {
     $info_status_list['check'] = intval($info_status_list['check']);
     $info_status_list['task_id'] = intval($info_status_list['task_id']);
     $sql = 'UPDATE `tasks` SET `status` = '.$info_status_list['check'].' WHERE id = '.$info_status_list['task_id'];
@@ -228,4 +228,23 @@ function  update_task_status ($link, $info_status_list) {
     }
 
     return $result;
+}
+
+/**
+ * Полнотекстовый поиск задач
+ * @param mysqli $link Соединение с БД
+ * @param array $search Массив значений $_POST
+ *
+ * @return array $tasks Задачи найденные при поиске
+ */
+function do_search_task($link, $search) {
+	mysqli_query($link, 'CREATE FULLTEXT INDEX task_ft_search ON tasks(name)');
+	$tasks = [];
+
+	if ($search) {
+		$sql = 'SELECT * FROM `tasks` WHERE MATCH(name) AGAINST("'.$search['search'].'")';
+		$tasks = get_info($link, $sql);
+	}
+
+	return $tasks;
 }

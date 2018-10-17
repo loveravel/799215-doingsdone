@@ -64,6 +64,12 @@ if ($link) {
 		}
 	}
 
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$search = $_POST;
+		$search['search'] = mysqli_real_escape_string($link, $search['search']);
+		$tasks = do_search_task($link, $search);
+	}
+
 	$content = include_template('index.php', [
 		'tasks' => $tasks,
 		'show_complete_tasks' => $show_complete_tasks
