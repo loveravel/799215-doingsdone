@@ -1,5 +1,11 @@
 <?php
-// Шаблонизатор
+/**
+ * Подключение шалбонов
+ * @param string $name Имя шаблона
+ * @param array $data Массив данных для шаблона
+ *
+ * @return boolean $result Статус задачи
+ */
 function include_template($name, $data) {
 	$name = 'templates/' . $name;
 	$result = '';
@@ -17,7 +23,13 @@ function include_template($name, $data) {
 	return $result;
 };
 
-// Запрос к БД
+/**
+ * Обработка запроса к БД
+ * @param mysqli $link Соединение с БД
+ * @param string $sql  SQL-запрос
+ *
+ * @return array $info_var Массив значений полученный из БД по SQL-запросу
+ * */
 function get_info ($link, $sql) {
     $info = [];
 	$result = mysqli_query($link, $sql);
@@ -30,7 +42,13 @@ function get_info ($link, $sql) {
 	return $info_var;
 }
 
-// Подсчет количества задач в проекте
+/**
+ * Подсчет количества задач в проекте
+ * @param array $all_tasks Массив задач
+ * @param integer $project_id Уникальный номер проекта
+ *
+ * @return integer $amount_tasks Количество задач в проекте
+ */
 function get_amount_tasks($all_tasks, $project_id) {
 
 	$amount_tasks = 0;
@@ -43,7 +61,12 @@ function get_amount_tasks($all_tasks, $project_id) {
 	return $amount_tasks;
 };
 
-// Важные задачи (на выполнение осталось менее суток)
+/**
+ * Проеверка задачи на важность (задача считается важной, если на выполнение осталось менее суток)
+ * @param array $task Массив данных задачи
+ *
+ * @return integer $amount_tasks Количество задач в проекте
+ */
 function important_task($task) {
 	$current_time = time();
 	$deadline = strtotime($task['deadline']);
@@ -56,7 +79,12 @@ function important_task($task) {
 	}
 }
 
-// Валидация даты
+/**
+ * Валидация даты
+ * @param array $info_list Массив значений $_POST
+ *
+ * @return array $error_list Массив ошибок
+ */
 function do_validate_date($info_list) {
     $error_list = [];
 
@@ -72,7 +100,13 @@ function do_validate_date($info_list) {
     return $error_list;
 }
 
-// Проверка обязательных полей на заполненность
+/**
+ * Проверка полей обязательных для заполнения
+ * @param array $info_list Массив значений $_POST
+ * @param array $required_fields Массив содержащий список обязательных для заполнения полей
+ *
+ * @return array $error_list Массив ошибок
+ */
 function do_validate_required_fields($info_list, $required_fields) {
     $error_list = [];
 
@@ -85,7 +119,14 @@ function do_validate_required_fields($info_list, $required_fields) {
     return $error_list;
 }
 
-// Валидация формы добавления задач
+/**
+ * Валидация формы для создания задач
+ * @param array $info_list Массив значений $_POST
+ * @param array $required_fields Массив содержащий список обязательных для заполнения полей
+ * @param array $projects Массив содержащий список проектов
+ *
+ * @return array $error_list Массив ошибок
+ */
 function do_validate_task_form($info_list, $required_fields, $projects) {
 
     $error_list = do_validate_required_fields($info_list, $required_fields);
@@ -105,7 +146,14 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
 	return $error_list;
 }
 
-// Валидация формы регистрации
+/**
+ * Валидация формы для регистрации новгого пользователя
+ * @param mysqli $link Соединение с БД
+ * @param array $info_list Массив значений $_POST
+ * @param array $required_fields Массив содержащий список обязательных для заполнения полей
+ *
+ * @return array $error_list Массив ошибок
+ */
 function do_validate_register_form ($link, $info_list, $required_fields) {
     $error_list = do_validate_required_fields($info_list, $required_fields);
 
@@ -123,6 +171,14 @@ function do_validate_register_form ($link, $info_list, $required_fields) {
     return $error_list;
 }
 
+/**
+ * Валидация формы для аутентификации пользователя
+ * @param mysqli $link Соединение с БД
+ * @param array $info_list Массив значений $_POST
+ * @param array $required_fields Массив содержащий список обязательных для заполнения полей
+ *
+ * @return array $error_list Массив ошибок
+ */
 function do_validate_auth_form ($link, $info_list, $required_fields) {
     $info['error_list'] = [];
 
@@ -154,6 +210,13 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
     return $info;
 }
 
+/**
+ * Обновление статуса задачи
+ * @param mysqli $link Соединение с БД
+ * @param array $info_status_list Массив значений $_GET
+ *
+ * @return boolean $result Статус задачи
+ */
 function  update_task_status ($link, $info_status_list) {
     $info_status_list['check'] = intval($info_status_list['check']);
     $info_status_list['task_id'] = intval($info_status_list['task_id']);
@@ -165,17 +228,4 @@ function  update_task_status ($link, $info_status_list) {
     }
 
     return $result;
-}
-
-function check_connect ($link, $layout_content) {
-    if (!$link) {
-        $error['error_connect'] = mysqli_connect_error();
-        $content = include_template('error.php', ['error' => $error]);
-        $layout_content = include_template('error.php', [
-            'title' => 'Дела в порядке',
-            'content' => $content
-        ]);
-    }
-
-    return $layout_content;
 }
