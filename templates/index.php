@@ -1,5 +1,8 @@
-<h2 class="content__main-heading">Список задач</h2>
+<?php
+    $show_tasks = $_GET['show_tasks'] ?? NULL;
+?>
 
+<h2 class="content__main-heading">Список задач</h2>
 <form class="search-form" action="index.php" method="post">
 	<input class="search-form__input" type="text" name="search" value="<?= isset($search['search']) ? htmlspecialchars($search['search']) : ''; ?>" placeholder="Поиск по задачам">
 
@@ -9,9 +12,9 @@
 <div class="tasks-controls">
 	<nav class="tasks-switch">
 		<a href="/" class="tasks-switch__item <?= (!isset($_GET['show_tasks']) ? 'tasks-switch__item--active' : ''); ?>">Все задачи</a>
-		<a href="/?show_tasks=for_today" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'for_today') ? 'tasks-switch__item--active' : ''); ?>">Повестка дня</a>
-		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'for_tomorrow') ? 'tasks-switch__item--active' : ''); ?>">Завтра</a>
-		<a href="/?show_tasks=overdue" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'overdue') ? 'tasks-switch__item--active' : ''); ?>">Просроченные</a>
+		<a href="/?show_tasks=for_today" class="tasks-switch__item <?= (($show_tasks === 'for_today') ? 'tasks-switch__item--active' : ''); ?>">Повестка дня</a>
+		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item <?= (($show_tasks === 'for_tomorrow') ? 'tasks-switch__item--active' : ''); ?>">Завтра</a>
+		<a href="/?show_tasks=overdue" class="tasks-switch__item <?= (($show_tasks === 'overdue') ? 'tasks-switch__item--active' : ''); ?>">Просроченные</a>
 	</nav>
 
 	<label class="checkbox">
