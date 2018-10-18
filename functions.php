@@ -242,7 +242,7 @@ function do_search_task($link, $search) {
 	$tasks = [];
 
 	if ($search) {
-		$sql = 'SELECT * FROM `tasks` WHERE MATCH(name) AGAINST("'.$search['search'].'")';
+		$sql = 'SELECT * FROM `tasks` WHERE MATCH(name) AGAINST("'.$search.'")';
 		$tasks = get_info($link, $sql);
 	}
 
