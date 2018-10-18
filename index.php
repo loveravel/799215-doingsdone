@@ -64,7 +64,7 @@ if ($link) {
 		}
 	}
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
 		$search = trim($_POST['search']);
 		$search = mysqli_real_escape_string($link, $search);
 		$tasks = do_search_task($link, $search);
