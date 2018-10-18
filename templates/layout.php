@@ -9,11 +9,12 @@
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
 
-<body>
+<body <?= ($_SERVER['SCRIPT_NAME'] === '/guest.php') ? 'class="body-background"' : ''; ?>>
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-	<div class="container container--with-sidebar">
+
+	<div class="container <?= ($_SERVER['SCRIPT_NAME'] !== '/guest.php') ? 'container--with-sidebar' : ''; ?>">
 		<header class="main-header">
 			<a href="/">
 				<img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
@@ -39,37 +40,44 @@
 			</div>
 		</header>
 
+
 		<div class="content">
-			<section class="content__side">
-                <?php if(isset($_SESSION['user'])) : ?>
-                    <h2 class="content__side-heading">Проекты</h2>
+			<?php if(isset($_SESSION['user'])) : ?>
+                <section class="content__side">
 
-                    <nav class="main-navigation">
-                        <ul class="main-navigation__list">
-                            <?php foreach ($projects as $value):?>
-                                <li class="main-navigation__list-item <?= ($value['id'] === $_GET['project_id']) ? 'main-navigation__list-item--active' : ''; ?>">
-                                    <a class="main-navigation__list-item-link"
-                                        <?=(!$value['id']) ? 'href="/"' : 'href="/?project_id='.$value['id'].'"'; ?>>
-                                        <?= htmlspecialchars($value['name']); ?>
-                                    </a>
-                                    <span class="main-navigation__list-item-count"><?= get_amount_tasks($all_tasks, $value['id']); ?></span>
-                                </li>
-                            <?php endforeach;?>
-                        </ul>
-                    </nav>
+                        <h2 class="content__side-heading">Проекты</h2>
 
-                    <a class="button button--transparent button--plus content__side-button"
-                       href="add_project.php" target="project_add">Добавить проект</a>
-                <?php else : ?>
+                        <nav class="main-navigation">
+                            <ul class="main-navigation__list">
+                                <?php foreach ($projects as $value):?>
+                                    <li class="main-navigation__list-item <?= ($value['id'] === $_GET['project_id']) ? 'main-navigation__list-item--active' : ''; ?>">
+                                        <a class="main-navigation__list-item-link"
+                                            <?=(!$value['id']) ? 'href="/"' : 'href="/?project_id='.$value['id'].'"'; ?>>
+                                            <?= htmlspecialchars($value['name']); ?>
+                                        </a>
+                                        <span class="main-navigation__list-item-count"><?= get_amount_tasks($all_tasks, $value['id']); ?></span>
+                                    </li>
+                                <?php endforeach;?>
+                            </ul>
+                        </nav>
+
+                        <a class="button button--transparent button--plus content__side-button"
+                           href="add_project.php" target="project_add">Добавить проект</a>
+                </section>
+            <?php elseif ($_SERVER['SCRIPT_NAME'] !== '/guest.php') : ?>
+                <section class="content__side">
                     <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
                     <a class="button button--transparent content__side-button" href="auth.php">Войти</a>
-                <?php endif; ?>
-			</section>
-
-			<main class="content__main">
-				<?= $content; ?>
-			</main>
+                </section>
+            <?php else : ?>
+					<?= $content; ?>
+            <?php endif; ?>
+            <?php if ($_SERVER['SCRIPT_NAME'] !== '/guest.php') : ?>
+                <main class="content__main">
+                    <?= $content; ?>
+                </main>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>
