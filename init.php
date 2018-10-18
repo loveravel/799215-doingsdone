@@ -1,5 +1,9 @@
 <?php
 
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 session_start();
 
 require_once 'mysql_helper.php';
@@ -18,14 +22,21 @@ if (!$link) {
     mysqli_set_charset($link, "utf8");
 }
 
-
 $content = [];
 $layout_content = [];
+
 $result = [];
+
 $projects = [];
+$project_id = "";
+
 $tasks = [];
+
 $search = NULL;
+
 $info_list = [];
 $error_list = [];
+
 $show_complete_tasks = NULL;
+
 $result_send = [];
