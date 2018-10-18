@@ -233,7 +233,7 @@ function update_task_status ($link, $info_status_list) {
 /**
  * Полнотекстовый поиск задач
  * @param mysqli $link Соединение с БД
- * @param array $search Массив значений $_POST
+ * @param string $search Массив значений $_POST
  *
  * @return array $tasks Задачи найденные при поиске
  */
