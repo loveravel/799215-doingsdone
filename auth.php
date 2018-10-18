@@ -6,20 +6,13 @@ if(isset($_SESSION['user'])) {
     header('Location: /');
 }
 
-if (!$link) {
-    $error['error_connect'] = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
-    $layout_content = include_template('error.php', [
-        'title' => 'Дела в порядке',
-        'content' => $content
-    ]);
-} else {
+if ($link) {
     $info['error_list'] = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $info_list = $_POST;
 
-        $info_list['name'] = mysqli_real_escape_string($link, $info_list['name']);
+        $info_list['email'] = mysqli_real_escape_string($link, $info_list['email']);
         $info_list['password'] = mysqli_real_escape_string($link, $info_list['password']);
 
         $required_list = ['email','password'];

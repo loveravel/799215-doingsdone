@@ -1,0 +1,16 @@
+{
+    "name": "loveravel/doingsdone",
+    "description": "Website to miantain a to-do list",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Odintsov Sergey",
+            "email": "loveravel@yandex.ru"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.0",
+        "swiftmailer/swiftmailer": "^6.1"
+    }
+}

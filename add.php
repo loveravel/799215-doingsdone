@@ -3,18 +3,11 @@
 require_once 'init.php';
 
 if (!isset($_SESSION['user'])) {
-    header("Location: /guest.php");
+    header('Location: /guest.php');
     exit();
 }
 
-if (!$link) {
-	$error['error_connect'] = mysqli_connect_error();
-	$content = include_template('error.php', ['error' => $error]);
-	$layout_content = include_template('error.php', [
-		'title' => 'Дела в порядке',
-		'content' => $content
-	]);
-} else {
+if ($link) {
 	// Запрос для получения данных о пользователе по id
 	$sql = 'SELECT * FROM `users` WHERE `id` = '.$_SESSION['user'][0]['id'];
 	$user = get_info($link, $sql, $_SESSION['user'][0]['id']);

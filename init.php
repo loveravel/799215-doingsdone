@@ -7,14 +7,25 @@ require_once 'functions.php';
 
 $link = mysqli_connect("localhost", "root", "", "doingsdone");
 
-mysqli_set_charset($link, "utf8");
+if (!$link) {
+    $error['error_connect'] = mysqli_connect_error();
+    $content = include_template('error.php', ['error' => $error]);
+    $layout_content = include_template('error.php', [
+        'title' => 'Дела в порядке',
+        'content' => $content
+    ]);
+} else {
+    mysqli_set_charset($link, "utf8");
+}
 
+
+$content = [];
+$layout_content = [];
 $result = [];
-
 $projects = [];
 $tasks = [];
-
+$search = [];
 $info_list = [];
 $error_list = [];
-
 $show_complete_tasks = NULL;
+$result_send = [];

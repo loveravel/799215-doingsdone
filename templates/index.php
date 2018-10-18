@@ -1,7 +1,10 @@
-<h2 class="content__main-heading">Список задач</h2>
+<?php
+    $show_tasks = $_GET['show_tasks'] ?? NULL;
+?>
 
+<h2 class="content__main-heading">Список задач</h2>
 <form class="search-form" action="index.php" method="post">
-	<input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+	<input class="search-form__input" type="text" name="search" value="<?= isset($search['search']) ? htmlspecialchars($search['search']) : ''; ?>" placeholder="Поиск по задачам">
 
 	<input class="search-form__submit" type="submit" name="" value="Искать">
 </form>
@@ -9,9 +12,9 @@
 <div class="tasks-controls">
 	<nav class="tasks-switch">
 		<a href="/" class="tasks-switch__item <?= (!isset($_GET['show_tasks']) ? 'tasks-switch__item--active' : ''); ?>">Все задачи</a>
-		<a href="/?show_tasks=for_today" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'for_today') ? 'tasks-switch__item--active' : ''); ?>">Повестка дня</a>
-		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'for_tomorrow') ? 'tasks-switch__item--active' : ''); ?>">Завтра</a>
-		<a href="/?show_tasks=overdue" class="tasks-switch__item <?= (($_GET['show_tasks'] === 'overdue') ? 'tasks-switch__item--active' : ''); ?>">Просроченные</a>
+		<a href="/?show_tasks=for_today" class="tasks-switch__item <?= (($show_tasks === 'for_today') ? 'tasks-switch__item--active' : ''); ?>">Повестка дня</a>
+		<a href="/?show_tasks=for_tomorrow" class="tasks-switch__item <?= (($show_tasks === 'for_tomorrow') ? 'tasks-switch__item--active' : ''); ?>">Завтра</a>
+		<a href="/?show_tasks=overdue" class="tasks-switch__item <?= (($show_tasks === 'overdue') ? 'tasks-switch__item--active' : ''); ?>">Просроченные</a>
 	</nav>
 
 	<label class="checkbox">
@@ -23,13 +26,13 @@
 <table class="tasks">
 	<?php foreach ($tasks as $key => $value): ?>
 		<?php
-		if(!$show_complete_tasks && $value['status']) {
+		if (!$show_complete_tasks && $value['status']) {
 			continue;
 		}
 		?>
 		<tr class="tasks__item task
-			<?=($value['status']) ? 'task--completed' : '';?>
-			<?=(important_task($value)) ? 'task--important' : '';?>"
+			<?= ($value['status']) ? 'task--completed' : ''; ?>
+			<?= (important_task($value)) ? 'task--important' : ''; ?>"
 		>
 			<td class="task__select">
 				<label class="checkbox task__checkbox">
@@ -39,12 +42,12 @@
 			</td>
 
 			<td class="task__file">
-                <?php if(!empty($value['file_path'])) : ?>
-				    <a class="download-link" href="<?= $value['file_path']?>"><?= $value['file_name']; ?></a>
-                <? endif; ?>
+                <?php if (!empty($value['file_path'])) : ?>
+				    <a class="download-link" href="<?= htmlspecialchars($value['file_path']); ?>"><?= htmlspecialchars($value['file_name']); ?></a>
+                <?php endif; ?>
 			</td>
 
-			<td class="task__date"><?=$value['deadline'];?></td>
+			<td class="task__date"><?= htmlspecialchars($value['deadline']); ?></td>
 		</tr>
-	<?php endforeach;?>
+	<?php endforeach; ?>
 </table>

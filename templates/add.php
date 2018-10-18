@@ -5,7 +5,7 @@
 		<label class="form__label" for="name">Название <sup>*</sup></label>
 
 		<input class="form__input <?= isset($error_list['name']) ? 'form__input--error' : ''; ?>" type="text" name="name" id="name" 
-		value="<?= isset($info_list['name']) ? $info_list['name'] : ''; ?>" placeholder="Введите название">
+		value="<?= isset($info_list['name']) ? htmlspecialchars($info_list['name']) : ''; ?>" placeholder="Введите название">
 		<p class="form__message">
 			<span class="form__message error-message"><?= isset($error_list['name']) ? $error_list['name'] : ''; ?></span>
 		</p>
@@ -32,7 +32,7 @@
 	<div class="form__row">
 		<label class="form__label" for="deadline">Дата выполнения</label>
 
-        <input class="form__input form__input--date <?= isset($error_list['deadline']) ? 'form__input--error' : ''; ?>" type="date" name="deadline" id="deadline" value="<?= isset($info_list['deadline']) ? $info_list['deadline'] : ''; ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+        <input class="form__input form__input--date <?= isset($error_list['deadline']) ? 'form__input--error' : ''; ?>" type="date" name="deadline" id="deadline" value="<?= isset($info_list['deadline']) ? htmlspecialchars($info_list['deadline']) : ''; ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
         <p class="form__message">
             <span class="form__message error-message"><?= isset($error_list['deadline']) ? $error_list['deadline'] : ''; ?></span>
         </p>
@@ -42,7 +42,7 @@
 		<label class="form__label" for="preview">Файл</label>
 
 		<div class="form__input-file">
-			<input class="visually-hidden" type="file" name="preview" id="preview" value="<?= isset($info_list['preview']) ? $info_list['preview'] : ''; ?>">
+			<input class="visually-hidden" type="file" name="preview" id="preview" value="<?= isset($info_list['preview']) ? htmlspecialchars($info_list['preview']) : ''; ?>">
 
 			<label class="button button--transparent" for="preview">
 				<span>Выберите файл</span>
@@ -54,7 +54,7 @@
 
         <?php if($error_list): ?>
             <p class="error-message">Пожалуйста, исправьте ошибки в форме</p>
-        <? endif; ?>
+        <?php endif; ?>
 
 		<input class="button" type="submit" name="" value="Добавить">
 	</div>

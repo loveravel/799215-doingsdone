@@ -5,7 +5,7 @@
         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
         <input class="form__input <?= isset($error_list['email']) ? 'form__input--error' : ''; ?>" type="text" name="email" id="email"
-               value="<?= isset($info_list['email']) ? $info_list['email'] : ''; ?>" placeholder="Введите e-mail">
+               value="<?= isset($info_list['email']) ? htmlspecialchars($info_list['email']) : ''; ?>" placeholder="Введите e-mail">
 
         <p class="form__message">
             <?= isset($error_list['email']) ? $error_list['email'] : ''; ?>
