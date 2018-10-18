@@ -28,3 +28,4 @@ $search = [];
 $info_list = [];
 $error_list = [];
 $show_complete_tasks = NULL;
+$result_send = [];

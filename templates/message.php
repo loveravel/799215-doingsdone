@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<p>Уважаемый, <?= $username; ?>. На <?= $tasks[0]['deadline']; ?> у вас запланированы задачи: </p>
+<p>Уважаемый, <?= $username; ?>. На <?= $user_tasks[0]['deadline']; ?> у вас запланированы задачи: </p>
 
 <table>
     <tr>
@@ -16,10 +16,10 @@
         <th>Название задачи</th>
     </tr>
     <tbody>
-	<?php foreach ($tasks as $key => $value): ?>
+	<?php foreach ($user_tasks as $key => $value): ?>
         <tr>
             <td><?= $key+1; ?></td>
-            <td><?= $value['task_name']; ?></td>
+            <td><?= $value['name']; ?></td>
         </tr>
 	<?php endforeach; ?>
     </tbody>
