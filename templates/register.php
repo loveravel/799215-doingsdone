@@ -38,7 +38,7 @@
 
         <?php if($error_list): ?>
             <p class="error-message">Пожалуйста, исправьте ошибки в форме</p>
-        <? endif; ?>
+        <?php endif; ?>
 
         <input class="button" type="submit" name="" value="Зарегистрироваться">
     </div>
