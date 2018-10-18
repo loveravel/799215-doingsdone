@@ -14,7 +14,7 @@ $logger = new Swift_Plugins_Loggers_ArrayLogger();
 $mailer -> registerPlugin(new Swift_Plugins_LoggerPlugin($logger));
 
 $result = mysqli_query($link,
-	'SELECT *, `users`.`name` AS `username`, t.name AS task_name, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline`
+	'SELECT *, `users`.`name` AS `username`, t.name AS task_name
 FROM `tasks` AS t 
 INNER JOIN `users` ON `users`.`id` = t.user_id
 WHERE `deadline` >= CURRENT_DATE
@@ -45,7 +45,7 @@ if ($result && mysqli_num_rows($result)) {
 		$message->setTo([$value[0]['email']]);
 
 		$sql = '
-			SELECT *
+			SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline`
 			FROM `tasks`
 			WHERE `deadline` >= CURRENT_DATE
 			AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 DAY)
