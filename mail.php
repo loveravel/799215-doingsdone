@@ -18,7 +18,7 @@ $result = mysqli_query($link,
 FROM `tasks` AS t 
 INNER JOIN `users` ON `users`.`id` = t.user_id
 WHERE `deadline` >= CURRENT_DATE
-AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 DAY)
+AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 HOUR)
 AND `status` = 0');
 
 if ($result && mysqli_num_rows($result)) {
@@ -48,7 +48,7 @@ if ($result && mysqli_num_rows($result)) {
 			SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline`
 			FROM `tasks`
 			WHERE `deadline` >= CURRENT_DATE
-			AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 DAY)
+			AND `deadline` <= date_add(CURRENT_DATE , INTERVAL 1 HOUR)
 			AND `status` = 0
 			AND `user_id` = '.$value[0]['id'];
 		$user_tasks = get_info($link, $sql);
