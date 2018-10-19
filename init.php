@@ -23,7 +23,7 @@ if (!$link) {
 }
 
 $content = [];
-$layout_content = [];
+$layout_content = "";
 
 $result = [];
 
