@@ -32,6 +32,7 @@ function include_template($name, $data) {
  * */
 function get_info ($link, $sql) {
     $info = [];
+    $info_var = [];
 	$result = mysqli_query($link, $sql);
 	if (!$result) {
 		$info['error'] = mysqli_error($link);
