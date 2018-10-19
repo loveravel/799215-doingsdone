@@ -22,7 +22,7 @@ if (!$link) {
     mysqli_set_charset($link, "utf8");
 }
 
-$content = [];
+$content = "";
 $layout_content = "";
 
 $result = [];
