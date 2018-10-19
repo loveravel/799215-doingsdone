@@ -18,11 +18,14 @@ $layout_content = "";
 
 $result = [];
 
+$username = "";
+
 $projects = [];
 $project_id = NULL;
 
 $tasks = [];
 $all_tasks =[];
+$user_tasks = [];
 
 $search = NULL;
 

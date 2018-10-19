@@ -129,18 +129,16 @@ function do_validate_required_fields($info_list, $required_fields) {
  * @return array $error_list Массив ошибок
  */
 function do_validate_task_form($info_list, $required_fields, $projects) {
-	$project_id_list = [];
 
     $error_list = do_validate_required_fields($info_list, $required_fields);
 
-	foreach ($projects as $value) {
-	    $project_id_list[] = $value['id'];
+    $projects_id = [];
+    foreach ($projects as $value) {
+    	$projects_id[] = $value['id'];
     }
 
-    if (isset($info_list['project']) && !in_array($info_list['project'], $project_id_list)) {
-            $error_list['project'] = 'Проекта не существует!';
-    } else {
-        $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
+	if (isset($info_list['project']) && !in_array($info_list['project'], $projects_id)) {
+			$error_list['project'] = 'Проекта не существует!';
     }
 
 	return $error_list;
