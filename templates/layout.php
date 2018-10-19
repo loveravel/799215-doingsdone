@@ -1,3 +1,7 @@
+<?php
+    $project_id = $_GET['project_id'] ?? NULL;
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 

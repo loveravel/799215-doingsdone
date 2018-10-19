@@ -19,7 +19,7 @@ $layout_content = "";
 $result = [];
 
 $projects = [];
-$project_id = "";
+$project_id = NULL;
 
 $tasks = [];
 $all_tasks =[];
