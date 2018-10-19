@@ -33,7 +33,7 @@ $sql = 'SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline` FROM `tasks`
 
 if (isset($_GET['project_id'])) {
     $project_id = intval($_GET['project_id']);
-        $sql .= '&& `project_id` = '.$project_id;
+    $sql .= '&& `project_id` = '.$project_id;
 }
 
 if (isset($_GET['show_tasks'])) {

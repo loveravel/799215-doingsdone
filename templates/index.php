@@ -26,10 +26,11 @@
 <table class="tasks">
 	<?php foreach ($tasks as $key => $value): ?>
 		<?php
-		if (!$show_complete_tasks && $value['status']) {
-			continue;
-		}
+            if (!$show_complete_tasks && $value['status']) {
+                continue;
+            }
 		?>
+
 		<tr class="tasks__item task
 			<?= ($value['status']) ? 'task--completed' : ''; ?>
 			<?= (important_task($value)) ? 'task--important' : ''; ?>"
@@ -49,5 +50,6 @@
 
 			<td class="task__date"><?= htmlspecialchars($value['deadline']); ?></td>
 		</tr>
+
 	<?php endforeach; ?>
 </table>
