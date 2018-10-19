@@ -129,6 +129,7 @@ function do_validate_required_fields($info_list, $required_fields) {
  * @return array $error_list Массив ошибок
  */
 function do_validate_task_form($info_list, $required_fields, $projects) {
+	$project_id_list = [];
 
     $error_list = do_validate_required_fields($info_list, $required_fields);
 
