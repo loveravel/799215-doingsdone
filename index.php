@@ -23,11 +23,11 @@ if ($link) {
 
 	// Запрос для получения проектов у текущего пользователя
 	$sql = 'SELECT * FROM `projects` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
-	$projects = get_info($link, $sql, $_SESSION['user'][0]['id']);
+	$projects = get_info($link, $sql);
 
 	// Запрос для получения списка всех задач
 	$sql = 'SELECT * FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
-	$all_tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
+	$all_tasks = get_info($link, $sql);
 
 	// Запрос для получения списка задач
     $sql = 'SELECT *, DATE_FORMAT(`deadline`, "%d.%m.%Y") AS `deadline` FROM `tasks` WHERE `user_id` = '.$_SESSION['user'][0]['id'];
@@ -48,7 +48,7 @@ if ($link) {
         }
     }
 
-	$tasks = get_info($link, $sql, $_SESSION['user'][0]['id']);
+	$tasks = get_info($link, $sql);
 
 	// Проверка проекта на существование
 	if (isset($_GET['project_id'])) {
