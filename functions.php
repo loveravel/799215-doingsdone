@@ -135,10 +135,8 @@ function do_validate_task_form($info_list, $required_fields, $projects) {
 	    $project_id_list[] = $value['id'];
     }
 
-    if (isset($info_list['project'])) {
-        if (!in_array($info_list['project'], $project_id_list)) {
+    if (isset($info_list['project']) && !in_array($info_list['project'], $project_id_list)) {
             $error_list['project'] = 'Проекта не существует!';
-        }
     } else {
         $error_list['project'] = 'Создайте проект, чтобы добавить в него задачу!';
     }
@@ -193,10 +191,8 @@ function do_validate_auth_form ($link, $info_list, $required_fields) {
 
     $user = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : null;
 
-    if (empty($info['error_list']['email'])) {
-        if (mysqli_num_rows($result) === 0) {
+    if (empty($info['error_list']['email']) && mysqli_num_rows($result) === 0) {
             $info['error_list']['email'] = 'Пользователя с таким e-mail не существует!';
-        }
     }
 
     if (!count($info['error_list']) && $user) {
